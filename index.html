@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>خريطة طريق علم البيانات لرهف </title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        :root {
+            --bg-dark: #050505;
+            --card-bg: #0d0d0d;
+            --primary: #7b42f6; 
+            --secondary: #00d2ff;
+            --text-white: #ffffff;
+            --text-gray: #a0a0a0;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Cairo', sans-serif; }
+
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-white);
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+        }
+
+        .presentation-container {
+            width: 90vw;
+            height: 85vh;
+            max-width: 1200px;
+            background-color: var(--card-bg);
+            border-radius: 15px;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 0 40px rgba(123, 66, 246, 0.15);
+            border: 1px solid #1a1a1a;
+        }
+
+        .slide {
+            display: none;
+            width: 100%;
+            height: 100%;
+            padding: 60px 80px;
+            flex-direction: column;
+            justify-content: center;
+            animation: fadeIn 0.4s ease-in-out;
+        }
+
+        .slide.active { display: flex; }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: scale(0.98); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        .section-header { font-size: 38px; border-right: 6px solid var(--primary); padding-right: 20px; margin-bottom: 30px; color: var(--text-white); }
+
+        .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-top: 20px; }
+        .card { background: #111; padding: 25px; border-radius: 12px; text-align: center; border: 1px solid #222; transition: 0.3s; }
+        .card:hover { border-color: var(--primary); transform: translateY(-5px); }
+        .card i { font-size: 40px; color: var(--primary); margin-bottom: 15px; }
+        .card h3 { color: var(--secondary); margin-bottom: 10px; font-size: 20px; }
+        .card p { color: var(--text-gray); font-size: 15px; line-height: 1.5; }
+
+        table { width: 100%; border-collapse: collapse; margin-top: 10px; }
+        th { background: #1a1a1a; color: var(--secondary); text-align: right; padding: 12px; font-size: 18px; }
+        td { padding: 12px; border-bottom: 1px solid #222; color: var(--text-white); font-size: 17px; }
+
+        .controls { position: absolute; bottom: 25px; left: 50%; transform: translateX(-50%); display: flex; gap: 15px; z-index: 100; }
+        .nav-btn { background: #1a1a1a; border: 1px solid #333; color: white; padding: 8px 20px; cursor: pointer; border-radius: 5px; font-size: 14px; }
+        .nav-btn:hover { background: var(--primary); border-color: var(--primary); }
+        .page-indicator { position: absolute; bottom: 30px; right: 40px; color: var(--text-gray); font-size: 13px; }
+
+        .highlight-box { background: rgba(123, 66, 246, 0.1); padding: 20px; border-radius: 10px; border-right: 4px solid var(--primary); margin-top: 20px; }
+        
+        .badge { background: var(--primary); color: white; padding: 10px 20px; border-radius: 50px; display: inline-block; margin-top: 30px; font-weight: bold; }
+    </style>
+</head>
+<body>
+
+    <div class="presentation-container">
+
+        <div class="slide active">
+            <div style="text-align: center;">
+                <h1 style="font-size: 60px; margin-bottom: 10px;">خطة مبدئية لمسار علوم البيانات</h1>
+                <p style="font-size: 22px; color: var(--text-gray);">هنا عزيزي التقني تلاقي الخطة الانسب والالطف لتعلم </p>
+                <p style="color: var(--secondary); margin-top: 15px; font-weight: bold; font-size: 24px;">معد خصيصاً لرهَـف</p>
+            </div>
+        </div>
+
+        <div class="slide">
+            <h2 class="section-header">لماذا هذا المسار عزيزي التقني؟</h2>
+            <p style="font-size: 24px; margin-bottom: 20px;"> تخيل إن العالم كله اليوم يترك أثره على شكل بيانات: الناس وش تشوف، وش تشتري، كيف تفكر، وحتى الأمراض والاقتصاد وعلم البيانات هو المجال اللي يخليك تفهم هذي الفوضى وتحولها لشيء له معنى وتأثير.<span style="color: var(--secondary);">Data Science</span>  
+            أنت مو بس تكتب كود، أنت تتوقع، تحلل، تكتشف، وتقدر تبني قرارات تغيّر أشياء فعلية. مو مجرد وظيفة، هو قوة فهم.</p>
+            <div class="highlight-box">
+                <p style="color: var(--text-white); font-weight: bold;">أنتِ لا تملك البيانات فقط، بل تملك القدرة على عرضها بإبهار.</p>
+            </div>
+        </div>
+
+        <div class="slide">
+            <h2 class="section-header">المرحلة الأولى: منصة سطر (الأساس)</h2>
+            <div class="grid-3">
+                <div class="card"><i class="fa-solid fa-database"></i><h3>قواعد البيانات SQL</h3><p>SQL 101, 102, 103: تعلم استخراج البيانات باحترافية.</p></div>
+                <div class="card"><i class="fa-brands fa-python"></i><h3>برمجة بايثون</h3><p>Python 101, 102: تأسيس قوي في لغة الذكاء الاصطناعي.</p></div>
+                <div class="card"><i class="fa-solid fa-chart-pie"></i><h3>مكتبات البيانات</h3><p>NumPy & Pandas: الأدوات الفعلية لتحليل الجداول الضخمة.</p></div>
+            </div>
+        </div>
+
+        <div class="slide">
+            <h2 class="section-header">التركيز البرمجي في سطر</h2>
+            <div style="display: flex; gap: 30px; align-items: start;">
+                <ul style="flex: 1; list-style: none; font-size: 18px;">
+                    <li style="margin-bottom: 15px;"><i class="fa-solid fa-check" style="color: var(--secondary); margin-left: 10px;"></i> Python 101 & 102: تجهيز البيئة والدوال.</li>
+                    <li style="margin-bottom: 15px;"><i class="fa-solid fa-check" style="color: var(--secondary); margin-left: 10px;"></i> Pandas: أهم مكتبة لقراءة وتحليل ملفات Excel و CSV.</li>
+                    <li style="margin-bottom: 15px;"><i class="fa-solid fa-check" style="color: var(--secondary); margin-left: 10px;"></i> Matplotlib: لبناء الرسوم البيانية الاستكشافية.</li>
+                </ul>
+                <div style="flex: 1; background: #111; height: 200px; border-radius: 10px; border: 1px solid #222; display: flex; align-items: center; justify-content: center;">
+                    <i class="fa-solid fa-code" style="font-size: 80px; color: #222;"></i>
+                </div>
+            </div>
+        </div>
+
+        <div class="slide">
+            <h2 class="section-header">الجدول الزمني لإنهاء مسار سطر</h2>
+            <table>
+                <tr><th>الأسبوع</th><th>الموضوع</th><th>التركيز</th></tr>
+                <tr><td>1 - 2</td><td>SQL</td><td>الاستعلامات والربط</td></tr>
+                <tr><td>3 - 4</td><td>بايثون</td><td>أساسيات البرمجة</td></tr>
+                <tr><td>5 - 6</td><td>تحليل البيانات</td><td>NumPy & Pandas</td></tr>
+                <tr><td>7 - 8</td><td>مشروع نهائي</td><td>تطبيق عملي كامل</td></tr>
+            </table>
+            <p style="margin-top: 20px; font-size: 14px; color: var(--text-gray);">* الخطة تفترض دراسة 1-2 ساعة يومياً.</p>
+        </div>
+
+        <div class="slide">
+            <h2 class="section-header">الجسر المهني: إتقان إكسل (Excel)</h2>
+            <div style="display: flex; gap: 30px; align-items: center;">
+                <div style="flex: 1.5;">
+                    <h3 style="color: var(--secondary); margin-bottom: 20px;">لماذا إكسل بعد البرمجة يا عزيزي التقني؟</h3>
+                    <ul style="list-style: none; font-size: 18px;">
+                        <li style="margin-bottom: 15px;"><i class="fa-solid fa-comments" style="color: var(--primary); margin-left: 10px;"></i> <strong>لغة الأعمال:</strong> الوسيلة الأولى للتواصل مع المدراء.</li>
+                        <li style="margin-bottom: 15px;"><i class="fa-solid fa-magnifying-glass" style="color: var(--primary); margin-left: 10px;"></i> <strong>التدقيق السريع:</strong> أداة فحص البيانات يدوياً قبل برمجتها.</li>
+                        <li style="margin-bottom: 15px;"><i class="fa-solid fa-layer-group" style="color: var(--primary); margin-left: 10px;"></i> <strong>أدوات القوة:</strong> إتقان الـ Pivot Tables للتحليل السريع.</li>
+                    </ul>
+                    <div class="highlight-box">
+                        <p style="font-size: 15px;">💡 تعلمه كمهارة تكميلية لتعزيز سيرتك الذاتية قبل الشهادات العالمية.</p>
+                    </div>
+                </div>
+                <div style="flex: 1; text-align: center;">
+                    <i class="fa-solid fa-file-excel" style="font-size: 120px; color: #1d6f42;"></i>
+                </div>
+            </div>
+        </div>
+
+        <div class="slide">
+            <h2 class="section-header">المرحلة الثانية: الاعتمادات العالمية</h2>
+            <table>
+                <tr><th>الشهادة</th><th>المنصة</th><th>التركيز</th></tr>
+                <tr><td>Google Data Analytics</td><td>Coursera</td><td>التفكير التحليلي، Tableau، لغة R.</td></tr>
+                <tr><td>IBM Data Science</td><td>Coursera</td><td>تعلم الآلة (ML) وبايثون المتقدم.</td></tr>
+                <tr><td>Microsoft DP-100</td><td>Microsoft</td><td>تصميم حلول البيانات على سحابة Azure.</td></tr>
+            </table>
+        </div>
+
+        <div class="slide">
+            <h2 class="section-header">مصادر تكميلية (بيئة التعلم)</h2>
+            <div class="grid-3">
+                <div class="card"><i class="fa-solid fa-k"></i><h3>Kaggle</h3><p>المكان الذي ستجدين فيه بيانات حقيقية للتدريب ومسابقات عالمية.</p></div>
+                <div class="card"><i class="fa-solid fa-graduation-cap"></i><h3>DataCamp</h3><p>منصة تفاعلية ممتازة للتدريب السريع على كتابة الكود.</p></div>
+                <div class="card"><i class="fa-brands fa-github"></i><h3>GitHub</h3><p>مهم جداً لرفع مشاريعك وبناء ملف أعمال يراه أصحاب العمل.</p></div>
+            </div>
+        </div>
+
+        <div class="slide">
+            <h2 class="section-header">مستقبل المجال في المملكة</h2>
+            <div style="display: flex; gap: 40px; align-items: center;">
+                <div style="font-size: 60px; font-weight: bold; color: var(--secondary);">30%+</div>
+                <div>
+                    <h3 style="color: var(--primary); margin-bottom: 10px;">رؤية 2030 والبيانات</h3>
+                    <p style="font-size: 18px; line-height: 1.6;">تعتبر البيانات "النفط الجديد" في المملكة. الطلب على علماء البيانات في تزايد مستمر، خاصة في هيئات مثل <span style="color: var(--secondary);">سدايا</span> والشركات الكبرى مثل أرامكو ونيوم.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="slide">
+            <h2 class="section-header">التطبيق هو السر</h2>
+            <p style="font-size: 22px; line-height: 1.8;">لا تكتفي بمشاهدة الدروس. سر النجاح هو أخذ ملف بيانات حقيقي من <span style="color: var(--primary);">Kaggle</span>، تنظيفه باستخدام <span style="color: var(--secondary);">Pandas</span>، ثم عرض نتائجه في  <span style="color: var(--primary);">GitHub</span>.</p>
+            <p style="margin-top: 20px; font-weight: bold; color: var(--secondary); text-align: center;">هذا المزيج هو ما سيميزك عن الجميع! عزيزي التقني</p>
+        </div>
+
+        <div class="slide" style="text-align: center;">
+            <h2 class="section-header" style="border: none; text-align: center; padding: 0;">وصلنا للنهاية؟ لا!! هذي البداية ✨</h2>
+            <p style="font-size: 24px; line-height: 1.6; color: var(--text-gray);">
+                رحلتك في التقنية ما تحتاج تكون مثالية، تحتاج استمرارية فقط.
+                كل مشروع تسويه، كل سطر كود تكتبيه، وكل مرة تتعلم فيها شيء جديد تقربك من النسخة اللي تحلم تكون فيها.
+            </p>
+            <div class="badge">You are building your future.</div>
+        </div>
+
+        <div class="slide" style="text-align: center;">
+            <i class="fa-solid fa-quote-right" style="font-size: 40px; color: var(--primary); margin-bottom: 20px;"></i>
+            <h1 style="font-size: 35px; line-height: 1.5;">"البيانات ليست مجرد أرقام، بل هي قصص تنتظر من يرويها باحترافية"</h1>
+            <p style="color: var(--secondary); margin-top: 20px; font-weight: bold; font-size: 24px;">ابدا رحلتك اليوم يا عزيزي التقني</p>
+            <p style="margin-top: 20px; color: var(--text-gray); font-size: 14px;">itsthecsrav | رهَـف</p>
+        </div>
+
+        <div class="controls">
+            <button class="nav-btn" onclick="prevSlide()">السابق</button>
+            <button class="nav-btn" onclick="nextSlide()">التالي</button>
+        </div>
+        <div class="page-indicator" id="pageNumber">صفحة 1 من 12</div>
+    </div>
+
+    <script>
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide');
+        const pageNumberDisplay = document.getElementById('pageNumber');
+
+        function updateDisplay() {
+            slides.forEach((slide, index) => {
+                slide.classList.toggle('active', index === currentSlide);
+            });
+            pageNumberDisplay.innerText = `صفحة ${currentSlide + 1} من ${slides.length}`;
+        }
+
+        function nextSlide() {
+            if (currentSlide < slides.length - 1) {
+                currentSlide++;
+                updateDisplay();
+            }
+        }
+
+        function prevSlide() {
+            if (currentSlide > 0) {
+                currentSlide--;
+                updateDisplay();
+            }
+        }
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowLeft' || e.key === 'ArrowDown') nextSlide();
+            if (e.key === 'ArrowRight' || e.key === 'ArrowUp') prevSlide();
+        });
+    </script>
+</body>
+</html>
