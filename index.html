@@ -4,105 +4,497 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>خريطة طريق علم البيانات لرهف </title>
+
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
     <style>
+
         :root {
             --bg-dark: #050505;
             --card-bg: #0d0d0d;
-            --primary: #7b42f6; 
+            --primary: #7b42f6;
             --secondary: #00d2ff;
             --text-white: #ffffff;
             --text-gray: #a0a0a0;
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Cairo', sans-serif; }
-
-        body {
-            background-color: var(--bg-dark);
-            color: var(--text-white);
-            height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            overflow: hidden;
+        *{
+            margin:0;
+            padding:0;
+            box-sizing:border-box;
+            font-family:'Cairo',sans-serif;
         }
 
-        .presentation-container {
-            width: 90vw;
-            height: 85vh;
-            max-width: 1200px;
-            background-color: var(--card-bg);
-            border-radius: 15px;
-            position: relative;
-            display: flex;
-            flex-direction: column;
-            box-shadow: 0 0 40px rgba(123, 66, 246, 0.15);
-            border: 1px solid #1a1a1a;
+        body{
+            background-color:var(--bg-dark);
+            color:var(--text-white);
+
+            min-height:100vh;
+
+            display:flex;
+            justify-content:center;
+            align-items:center;
+
+            overflow:hidden;
+
+            padding:15px;
         }
 
-        .slide {
-            display: none;
-            width: 100%;
-            height: 100%;
-            padding: 60px 80px;
-            flex-direction: column;
-            justify-content: center;
-            animation: fadeIn 0.4s ease-in-out;
+        .presentation-container{
+
+            width:90vw;
+            height:85vh;
+
+            max-width:1200px;
+
+            background-color:var(--card-bg);
+
+            border-radius:15px;
+
+            position:relative;
+
+            display:flex;
+            flex-direction:column;
+
+            box-shadow:0 0 40px rgba(123,66,246,0.15);
+
+            border:1px solid #1a1a1a;
+
+            overflow:hidden;
         }
 
-        .slide.active { display: flex; }
+        .slide{
 
-        @keyframes fadeIn {
-            from { opacity: 0; transform: scale(0.98); }
-            to { opacity: 1; transform: scale(1); }
+            display:none;
+
+            width:100%;
+            height:100%;
+
+            padding:60px 80px;
+
+            flex-direction:column;
+            justify-content:center;
+
+            overflow-y:auto;
+
+            animation:fadeIn 0.4s ease-in-out;
         }
 
-        .section-header { font-size: 38px; border-right: 6px solid var(--primary); padding-right: 20px; margin-bottom: 30px; color: var(--text-white); }
+        .slide.active{
+            display:flex;
+        }
 
-        .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-top: 20px; }
-        .card { background: #111; padding: 25px; border-radius: 12px; text-align: center; border: 1px solid #222; transition: 0.3s; }
-        .card:hover { border-color: var(--primary); transform: translateY(-5px); }
-        .card i { font-size: 40px; color: var(--primary); margin-bottom: 15px; }
-        .card h3 { color: var(--secondary); margin-bottom: 10px; font-size: 20px; }
-        .card p { color: var(--text-gray); font-size: 15px; line-height: 1.5; }
+        @keyframes fadeIn{
 
-        table { width: 100%; border-collapse: collapse; margin-top: 10px; }
-        th { background: #1a1a1a; color: var(--secondary); text-align: right; padding: 12px; font-size: 18px; }
-        td { padding: 12px; border-bottom: 1px solid #222; color: var(--text-white); font-size: 17px; }
+            from{
+                opacity:0;
+                transform:scale(0.98);
+            }
 
-        .controls { position: absolute; bottom: 25px; left: 50%; transform: translateX(-50%); display: flex; gap: 15px; z-index: 100; }
-        .nav-btn { background: #1a1a1a; border: 1px solid #333; color: white; padding: 8px 20px; cursor: pointer; border-radius: 5px; font-size: 14px; }
-        .nav-btn:hover { background: var(--primary); border-color: var(--primary); }
-        .page-indicator { position: absolute; bottom: 30px; right: 40px; color: var(--text-gray); font-size: 13px; }
+            to{
+                opacity:1;
+                transform:scale(1);
+            }
+        }
 
-        .highlight-box { background: rgba(123, 66, 246, 0.1); padding: 20px; border-radius: 10px; border-right: 4px solid var(--primary); margin-top: 20px; }
-        
-        .badge { background: var(--primary); color: white; padding: 10px 20px; border-radius: 50px; display: inline-block; margin-top: 30px; font-weight: bold; }
+        .section-header{
+
+            font-size:38px;
+
+            border-right:6px solid var(--primary);
+
+            padding-right:20px;
+
+            margin-bottom:30px;
+
+            color:var(--text-white);
+
+            line-height:1.5;
+        }
+
+        .grid-3{
+
+            display:grid;
+
+            grid-template-columns:repeat(3,1fr);
+
+            gap:20px;
+
+            margin-top:20px;
+        }
+
+        .card{
+
+            background:#111;
+
+            padding:25px;
+
+            border-radius:12px;
+
+            text-align:center;
+
+            border:1px solid #222;
+
+            transition:0.3s;
+        }
+
+        .card:hover{
+
+            border-color:var(--primary);
+
+            transform:translateY(-5px);
+        }
+
+        .card i{
+
+            font-size:40px;
+
+            color:var(--primary);
+
+            margin-bottom:15px;
+        }
+
+        .card h3{
+
+            color:var(--secondary);
+
+            margin-bottom:10px;
+
+            font-size:20px;
+        }
+
+        .card p{
+
+            color:var(--text-gray);
+
+            font-size:15px;
+
+            line-height:1.7;
+        }
+
+        .table-wrapper{
+            width:100%;
+            overflow-x:auto;
+        }
+
+        table{
+
+            width:100%;
+
+            border-collapse:collapse;
+
+            margin-top:10px;
+
+            min-width:600px;
+        }
+
+        th{
+
+            background:#1a1a1a;
+
+            color:var(--secondary);
+
+            text-align:right;
+
+            padding:12px;
+
+            font-size:18px;
+        }
+
+        td{
+
+            padding:12px;
+
+            border-bottom:1px solid #222;
+
+            color:var(--text-white);
+
+            font-size:17px;
+        }
+
+        .controls{
+
+            position:absolute;
+
+            bottom:25px;
+
+            left:50%;
+
+            transform:translateX(-50%);
+
+            display:flex;
+
+            gap:15px;
+
+            z-index:100;
+        }
+
+        .nav-btn{
+
+            background:#1a1a1a;
+
+            border:1px solid #333;
+
+            color:white;
+
+            padding:8px 20px;
+
+            cursor:pointer;
+
+            border-radius:5px;
+
+            font-size:14px;
+
+            transition:.3s;
+        }
+
+        .nav-btn:hover{
+
+            background:var(--primary);
+
+            border-color:var(--primary);
+        }
+
+        .page-indicator{
+
+            position:absolute;
+
+            bottom:30px;
+
+            right:40px;
+
+            color:var(--text-gray);
+
+            font-size:13px;
+        }
+
+        .highlight-box{
+
+            background:rgba(123,66,246,0.1);
+
+            padding:20px;
+
+            border-radius:10px;
+
+            border-right:4px solid var(--primary);
+
+            margin-top:20px;
+        }
+
+        .badge{
+
+            background:var(--primary);
+
+            color:white;
+
+            padding:10px 20px;
+
+            border-radius:50px;
+
+            display:inline-block;
+
+            margin-top:30px;
+
+            font-weight:bold;
+        }
+
+        /* ===================================== */
+        /* الجوال */
+        /* ===================================== */
+
+        @media(max-width:768px){
+
+            body{
+                padding:0;
+            }
+
+            .presentation-container{
+
+                width:100vw;
+                height:100vh;
+
+                border-radius:0;
+            }
+
+            .slide{
+
+                padding:
+                90px 20px
+                110px 20px;
+
+                justify-content:flex-start;
+            }
+
+            .section-header{
+
+                font-size:28px;
+
+                margin-bottom:20px;
+            }
+
+            h1{
+                font-size:38px !important;
+                line-height:1.5;
+            }
+
+            h2{
+                line-height:1.5;
+            }
+
+            h3{
+                font-size:18px !important;
+            }
+
+            p{
+                font-size:16px !important;
+                line-height:1.9 !important;
+            }
+
+            .grid-3{
+
+                grid-template-columns:1fr;
+            }
+
+            .card{
+
+                padding:20px;
+            }
+
+            .card i{
+
+                font-size:34px;
+            }
+
+            th{
+
+                font-size:15px;
+            }
+
+            td{
+
+                font-size:14px;
+            }
+
+            .controls{
+
+                width:90%;
+
+                bottom:20px;
+
+                justify-content:center;
+            }
+
+            .nav-btn{
+
+                flex:1;
+
+                padding:12px;
+            }
+
+            .page-indicator{
+
+                top:20px;
+
+                right:20px;
+
+                bottom:auto;
+            }
+
+        }
+
+        /* ===================================== */
+        /* التابلت */
+        /* ===================================== */
+
+        @media(min-width:769px) and (max-width:1100px){
+
+            .slide{
+                padding:50px;
+            }
+
+            .grid-3{
+                grid-template-columns:repeat(2,1fr);
+            }
+
+        }
+
     </style>
+
 </head>
+
 <body>
 
     <div class="presentation-container">
 
         <div class="slide active">
+
             <div style="text-align: center;">
-                <h1 style="font-size: 60px; margin-bottom: 10px;">خطة مبدئية لمسار علوم البيانات</h1>
-                <p style="font-size: 22px; color: var(--text-gray);">هنا عزيزي التقني تلاقي الخطة الانسب والالطف لتعلم </p>
-                <p style="color: var(--secondary); margin-top: 15px; font-weight: bold; font-size: 24px;">معد خصيصاً لرهَـف</p>
+
+                <h1 style="font-size: 60px; margin-bottom: 10px;">
+                    خطة مبدئية لمسار علوم البيانات
+                </h1>
+
+                <p style="font-size: 22px; color: var(--text-gray);">
+                    هنا عزيزي التقني تلاقي الخطة الانسب والالطف لتعلم
+                </p>
+
+                <p style="color: var(--secondary); margin-top: 15px; font-weight: bold; font-size: 24px;">
+                    معد خصيصاً لرهَـف
+                </p>
+
             </div>
+
         </div>
 
         <div class="slide">
-            <h2 class="section-header">لماذا هذا المسار عزيزي التقني؟</h2>
-            <p style="font-size: 24px; margin-bottom: 20px;"> تخيل إن العالم كله اليوم يترك أثره على شكل بيانات: الناس وش تشوف، وش تشتري، كيف تفكر، وحتى الأمراض والاقتصاد وعلم البيانات هو المجال اللي يخليك تفهم هذي الفوضى وتحولها لشيء له معنى وتأثير.<span style="color: var(--secondary);">Data Science</span>  
-            أنت مو بس تكتب كود، أنت تتوقع، تحلل، تكتشف، وتقدر تبني قرارات تغيّر أشياء فعلية. مو مجرد وظيفة، هو قوة فهم.</p>
+
+            <h2 class="section-header">
+                لماذا هذا المسار عزيزي التقني؟
+            </h2>
+
+            <p style="font-size: 24px; margin-bottom: 20px;">
+
+                تخيل إن العالم كله اليوم يترك أثره على شكل بيانات:
+                الناس وش تشوف،
+                وش تشتري،
+                كيف تفكر،
+                وحتى الأمراض والاقتصاد.
+
+                وعلم البيانات هو المجال اللي يخليك تفهم هذي الفوضى
+                وتحولها لشيء له معنى وتأثير.
+
+                <span style="color: var(--secondary);">
+                    Data Science
+                </span>
+
+                أنت مو بس تكتب كود،
+                أنت تتوقع،
+                تحلل،
+                تكتشف،
+                وتقدر تبني قرارات تغيّر أشياء فعلية.
+
+                مو مجرد وظيفة،
+                هو قوة فهم.
+
+            </p>
+
             <div class="highlight-box">
-                <p style="color: var(--text-white); font-weight: bold;">أنتِ لا تملك البيانات فقط، بل تملك القدرة على عرضها بإبهار.</p>
+
+                <p style="color: var(--text-white); font-weight: bold;">
+
+                    أنتِ لا تملك البيانات فقط،
+                    بل تملك القدرة على عرضها بإبهار.
+
+                </p>
+
             </div>
+
         </div>
 
-        <div class="slide">
+       <div class="slide">
             <h2 class="section-header">المرحلة الأولى: منصة سطر (الأساس)</h2>
             <div class="grid-3">
                 <div class="card"><i class="fa-solid fa-database"></i><h3>قواعد البيانات SQL</h3><p>SQL 101, 102, 103: تعلم استخراج البيانات باحترافية.</p></div>
@@ -210,42 +602,87 @@
         </div>
 
         <div class="controls">
-            <button class="nav-btn" onclick="prevSlide()">السابق</button>
-            <button class="nav-btn" onclick="nextSlide()">التالي</button>
+
+            <button class="nav-btn" onclick="prevSlide()">
+                السابق
+            </button>
+
+            <button class="nav-btn" onclick="nextSlide()">
+                التالي
+            </button>
+
         </div>
-        <div class="page-indicator" id="pageNumber">صفحة 1 من 12</div>
+
+        <div class="page-indicator" id="pageNumber">
+            صفحة 1 من 12
+        </div>
+
     </div>
 
     <script>
+
         let currentSlide = 0;
-        const slides = document.querySelectorAll('.slide');
-        const pageNumberDisplay = document.getElementById('pageNumber');
 
-        function updateDisplay() {
-            slides.forEach((slide, index) => {
-                slide.classList.toggle('active', index === currentSlide);
+        const slides =
+            document.querySelectorAll('.slide');
+
+        const pageNumberDisplay =
+            document.getElementById('pageNumber');
+
+        function updateDisplay(){
+
+            slides.forEach((slide,index)=>{
+
+                slide.classList.toggle(
+                    'active',
+                    index===currentSlide
+                );
+
             });
-            pageNumberDisplay.innerText = `صفحة ${currentSlide + 1} من ${slides.length}`;
+
+            pageNumberDisplay.innerText=
+            `صفحة ${currentSlide+1} من ${slides.length}`;
         }
 
-        function nextSlide() {
-            if (currentSlide < slides.length - 1) {
+        function nextSlide(){
+
+            if(currentSlide < slides.length-1){
+
                 currentSlide++;
+
                 updateDisplay();
             }
         }
 
-        function prevSlide() {
-            if (currentSlide > 0) {
+        function prevSlide(){
+
+            if(currentSlide > 0){
+
                 currentSlide--;
+
                 updateDisplay();
             }
         }
 
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'ArrowLeft' || e.key === 'ArrowDown') nextSlide();
-            if (e.key === 'ArrowRight' || e.key === 'ArrowUp') prevSlide();
+        document.addEventListener('keydown',(e)=>{
+
+            if(
+                e.key==='ArrowLeft' ||
+                e.key==='ArrowDown'
+            ){
+                nextSlide();
+            }
+
+            if(
+                e.key==='ArrowRight' ||
+                e.key==='ArrowUp'
+            ){
+                prevSlide();
+            }
+
         });
+
     </script>
+
 </body>
 </html>
