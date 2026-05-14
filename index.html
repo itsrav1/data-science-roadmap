@@ -1,688 +1,2282 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>خريطة طريق علم البيانات لرهف </title>
-
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;700&display=swap" rel="stylesheet">
-
-    <link rel="stylesheet"
-        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-
-    <style>
-
-        :root {
-            --bg-dark: #050505;
-            --card-bg: #0d0d0d;
-            --primary: #7b42f6;
-            --secondary: #00d2ff;
-            --text-white: #ffffff;
-            --text-gray: #a0a0a0;
-        }
-
-        *{
-            margin:0;
-            padding:0;
-            box-sizing:border-box;
-            font-family:'Cairo',sans-serif;
-        }
-
-        body{
-            background-color:var(--bg-dark);
-            color:var(--text-white);
-
-            min-height:100vh;
-
-            display:flex;
-            justify-content:center;
-            align-items:center;
-
-            overflow:hidden;
-
-            padding:15px;
-        }
-
-        .presentation-container{
-
-            width:90vw;
-            height:85vh;
-
-            max-width:1200px;
-
-            background-color:var(--card-bg);
-
-            border-radius:15px;
-
-            position:relative;
-
-            display:flex;
-            flex-direction:column;
-
-            box-shadow:0 0 40px rgba(123,66,246,0.15);
-
-            border:1px solid #1a1a1a;
-
-            overflow:hidden;
-        }
-
-        .slide{
-
-            display:none;
-
-            width:100%;
-            height:100%;
-
-            padding:60px 80px;
-
-            flex-direction:column;
-            justify-content:center;
-
-            overflow-y:auto;
-
-            animation:fadeIn 0.4s ease-in-out;
-        }
-
-        .slide.active{
-            display:flex;
-        }
-
-        @keyframes fadeIn{
-
-            from{
-                opacity:0;
-                transform:scale(0.98);
-            }
-
-            to{
-                opacity:1;
-                transform:scale(1);
-            }
-        }
-
-        .section-header{
-
-            font-size:38px;
-
-            border-right:6px solid var(--primary);
-
-            padding-right:20px;
-
-            margin-bottom:30px;
-
-            color:var(--text-white);
-
-            line-height:1.5;
-        }
-
-        .grid-3{
-
-            display:grid;
-
-            grid-template-columns:repeat(3,1fr);
-
-            gap:20px;
-
-            margin-top:20px;
-        }
-
-        .card{
-
-            background:#111;
-
-            padding:25px;
-
-            border-radius:12px;
-
-            text-align:center;
-
-            border:1px solid #222;
-
-            transition:0.3s;
-        }
-
-        .card:hover{
-
-            border-color:var(--primary);
-
-            transform:translateY(-5px);
-        }
-
-        .card i{
-
-            font-size:40px;
-
-            color:var(--primary);
-
-            margin-bottom:15px;
-        }
-
-        .card h3{
-
-            color:var(--secondary);
-
-            margin-bottom:10px;
-
-            font-size:20px;
-        }
-
-        .card p{
-
-            color:var(--text-gray);
-
-            font-size:15px;
-
-            line-height:1.7;
-        }
-
-        .table-wrapper{
-            width:100%;
-            overflow-x:auto;
-        }
-
-        table{
-
-            width:100%;
-
-            border-collapse:collapse;
-
-            margin-top:10px;
-
-            min-width:600px;
-        }
-
-        th{
-
-            background:#1a1a1a;
-
-            color:var(--secondary);
-
-            text-align:right;
-
-            padding:12px;
-
-            font-size:18px;
-        }
-
-        td{
-
-            padding:12px;
-
-            border-bottom:1px solid #222;
-
-            color:var(--text-white);
-
-            font-size:17px;
-        }
-
-        .controls{
-
-            position:absolute;
-
-            bottom:25px;
-
-            left:50%;
-
-            transform:translateX(-50%);
-
-            display:flex;
-
-            gap:15px;
-
-            z-index:100;
-        }
-
-        .nav-btn{
-
-            background:#1a1a1a;
-
-            border:1px solid #333;
-
-            color:white;
-
-            padding:8px 20px;
-
-            cursor:pointer;
-
-            border-radius:5px;
-
-            font-size:14px;
-
-            transition:.3s;
-        }
-
-        .nav-btn:hover{
-
-            background:var(--primary);
-
-            border-color:var(--primary);
-        }
-
-        .page-indicator{
-
-            position:absolute;
-
-            bottom:30px;
-
-            right:40px;
-
-            color:var(--text-gray);
-
-            font-size:13px;
-        }
-
-        .highlight-box{
-
-            background:rgba(123,66,246,0.1);
-
-            padding:20px;
-
-            border-radius:10px;
-
-            border-right:4px solid var(--primary);
-
-            margin-top:20px;
-        }
-
-        .badge{
-
-            background:var(--primary);
-
-            color:white;
-
-            padding:10px 20px;
-
-            border-radius:50px;
-
-            display:inline-block;
-
-            margin-top:30px;
-
-            font-weight:bold;
-        }
-
-        /* ===================================== */
-        /* الجوال */
-        /* ===================================== */
-
-        @media(max-width:768px){
-
-            body{
-                padding:0;
-            }
-
-            .presentation-container{
-
-                width:100vw;
-                height:100vh;
-
-                border-radius:0;
-            }
-
-            .slide{
-
-                padding:
-                90px 20px
-                110px 20px;
-
-                justify-content:flex-start;
-            }
-
-            .section-header{
-
-                font-size:28px;
-
-                margin-bottom:20px;
-            }
-
-            h1{
-                font-size:38px !important;
-                line-height:1.5;
-            }
-
-            h2{
-                line-height:1.5;
-            }
-
-            h3{
-                font-size:18px !important;
-            }
-
-            p{
-                font-size:16px !important;
-                line-height:1.9 !important;
-            }
-
-            .grid-3{
-
-                grid-template-columns:1fr;
-            }
-
-            .card{
-
-                padding:20px;
-            }
-
-            .card i{
-
-                font-size:34px;
-            }
-
-            th{
-
-                font-size:15px;
-            }
-
-            td{
-
-                font-size:14px;
-            }
-
-            .controls{
-
-                width:90%;
-
-                bottom:20px;
-
-                justify-content:center;
-            }
-
-            .nav-btn{
-
-                flex:1;
-
-                padding:12px;
-            }
-
-            .page-indicator{
-
-                top:20px;
-
-                right:20px;
-
-                bottom:auto;
-            }
-
-        }
-
-        /* ===================================== */
-        /* التابلت */
-        /* ===================================== */
-
-        @media(min-width:769px) and (max-width:1100px){
-
-            .slide{
-                padding:50px;
-            }
-
-            .grid-3{
-                grid-template-columns:repeat(2,1fr);
-            }
-
-        }
-
-    </style>
-
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>خريطة طريق علم البيانات الاحترافية | رهيفة</title>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;700&family=Orbitron:wght@500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<style>
+:root {
+    --bg: #030305;
+    --card-bg: rgba(10, 10, 15, 0.9);
+    --primary: #7b42f6; 
+    --secondary: #00d2ff;
+    --accent: #39ff14; /* Neon Green للملاحظات الهامة */
+    --text-main: #ffffff;
+    --text-dim: #b0b0b0;
+    --transition-speed: 0.8s;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Cairo', sans-serif; cursor: none; }
+
+body {
+    background: var(--bg);
+    color: var(--text-main);
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    position: relative;
+}
+
+body::before {
+    content: '';
+    position: absolute;
+    width: 200%; height: 200%;
+    background-image: linear-gradient(rgba(123, 66, 246, 0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(123, 66, 246, 0.05) 1px, transparent 1px);
+    background-size: 60px 60px;
+    z-index: 0;
+    animation: backgroundMove 60s linear infinite;
+}
+
+@keyframes backgroundMove { from { transform: translate(0, 0); } to { transform: translate(-50px, -50px); } }
+
+.presentation-container {
+    width: 95vw;
+    height: 90vh;
+    max-width: 1350px;
+    background: var(--card-bg);
+    border-radius: 24px;
+    position: relative;
+    overflow: hidden;
+    backdrop-filter: blur(25px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 0 100px rgba(0, 0, 0, 0.7);
+    z-index: 1;
+}
+
+.timeline-indicator {
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 6px;
+    background: rgba(255, 255, 255, 0.05);
+    z-index: 100;
+}
+
+.timeline-progress {
+    height: 100%;
+    background: linear-gradient(90deg, var(--primary), var(--secondary));
+    width: 0%;
+    transition: width var(--transition-speed) cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 0 20px var(--secondary);
+}
+
+.slide {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    padding: 40px 80px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    visibility: hidden;
+    opacity: 0;
+    transform: translateY(40px) scale(0.95);
+    transition: all var(--transition-speed) cubic-bezier(0.19, 1, 0.22, 1);
+}
+
+.slide.active {
+    visibility: visible;
+    opacity: 1;
+    transform: translateY(0) scale(1);
+}
+
+.section-header {
+    font-size: clamp(30px, 5vw, 48px);
+    font-family: 'Orbitron', sans-serif;
+    margin-bottom: 20px;
+    background: linear-gradient(to bottom, #fff, var(--secondary));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+.content-box {
+    background: rgba(255, 255, 255, 0.03);
+    padding: 30px;
+    border-radius: 15px;
+    border-right: 4px solid var(--primary);
+    text-align: right;
+    max-width: 900px;
+    width: 100%;
+    margin: 15px 0;
+}
+
+.icon-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 25px;
+    width: 100%;
+    margin-top: 30px;
+}
+
+.icon-item {
+    background: rgba(123, 66, 246, 0.1);
+    padding: 20px;
+    border-radius: 12px;
+    transition: 0.4s;
+    border: 1px solid transparent;
+}
+
+.icon-item:hover {
+    background: rgba(0, 210, 255, 0.1);
+    border-color: var(--secondary);
+    transform: translateY(-5px);
+}
+
+.icon-item i { font-size: 45px; color: var(--secondary); margin-bottom: 10px; }
+
+table { width: 100%; border-collapse: collapse; margin-top: 20px; background: rgba(0,0,0,0.2); border-radius: 10px; overflow: hidden; }
+th { background: var(--primary); color: white; padding: 15px; font-family: 'Orbitron'; text-align: center; }
+td { padding: 12px; border-bottom: 1px solid rgba(255,255,255,0.05); text-align: center; font-size: 15px; }
+tr:hover { background: rgba(255,255,255,0.05); }
+
+.nav-trigger {
+    position: absolute;
+    top: 50%; transform: translateY(-50%);
+    width: 60px; height: 100%;
+    display: flex; align-items: center; justify-content: center;
+    z-index: 1000; transition: 0.3s;
+}
+
+.nav-trigger:hover i { color: var(--secondary); filter: drop-shadow(0 0 10px var(--secondary)); }
+.nav-trigger.prev { right: 0; }
+.nav-trigger.next { left: 0; }
+.nav-trigger i { font-size: 30px; color: rgba(255,255,255,0.2); }
+
+#custom-cursor {
+    width: 25px; height: 25px; border: 2px solid var(--secondary);
+    border-radius: 50%; position: fixed; pointer-events: none;
+    z-index: 99999; transition: transform 0.1s linear;
+    box-shadow: 0 0 15px var(--secondary);
+}
+
+.btn-link {
+    display: inline-block;
+    margin-top: 15px;
+    padding: 10px 25px;
+    background: linear-gradient(45deg, var(--primary), var(--secondary));
+    color: white;
+    text-decoration: none;
+    border-radius: 50px;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+.btn-link:hover { transform: scale(1.05); box-shadow: 0 0 20px var(--primary); }
+
+@media (max-width: 768px) {
+    .slide { padding: 40px 20px; }
+    #custom-cursor { display: none; }
+    .icon-grid { grid-template-columns: 1fr 1fr; }
+    .section-header { font-size: 24px; }
+}
+</style>
 </head>
-
 <body>
 
-    <div class="presentation-container">
+<div id="custom-cursor"></div>
 
-        <div class="slide active">
+<div class="presentation-container">
+    <div class="timeline-indicator">
+        <div class="timeline-progress" id="progress"></div>
+    </div>
 
-            <div style="text-align: center;">
 
-                <h1 style="font-size: 60px; margin-bottom: 10px;">
-                    خطة مبدئية لمسار علوم البيانات
-                </h1>
 
-                <p style="font-size: 22px; color: var(--text-gray);">
-                    هنا عزيزي التقني تلاقي الخطة الانسب والالطف لتعلم
-                </p>
 
-                <p style="color: var(--secondary); margin-top: 15px; font-weight: bold; font-size: 24px;">
-                    معد خصيصاً لرهَـف
-                </p>
-
-            </div>
-
+    <!-- Slide 1: Intro -->
+    <div class="slide active">
+        <h1 class="section-header">DATA SCIENCE ROADMAP</h1>
+        <p style="font-size: 20px; color: var(--text-dim);">خارطة الطريق المتكاملة: من الصفر إلى الاحتراف</p>
+        <div style="margin-top: 40px; border-top: 1px solid var(--primary); padding-top: 20px;">
+            <p style="font-family: 'Orbitron'; color: var(--secondary);">LEVEL UP YOUR CAREER!</p>
+            <p>علم البيانات ليس مجرد أدوات، بل هو "طريقة تفكير"</p>
         </div>
+    </div>
 
-        <div class="slide">
 
-            <h2 class="section-header">
-                لماذا هذا المسار عزيزي التقني؟
-            </h2>
 
-            <p style="font-size: 24px; margin-bottom: 20px;">
 
-                تخيل إن العالم كله اليوم يترك أثره على شكل بيانات:
-                الناس وش تشوف،
-                وش تشتري،
-                كيف تفكر،
-                وحتى الأمراض والاقتصاد.
 
-                وعلم البيانات هو المجال اللي يخليك تفهم هذي الفوضى
-                وتحولها لشيء له معنى وتأثير.
 
-                <span style="color: var(--secondary);">
-                    Data Science
-                </span>
-
-                أنت مو بس تكتب كود،
-                أنت تتوقع،
-                تحلل،
-                تكتشف،
-                وتقدر تبني قرارات تغيّر أشياء فعلية.
-
-                مو مجرد وظيفة،
-                هو قوة فهم.
-
+    <!-- Slide 2: Why Data Science? -->
+    <div class="slide">
+        <h2 class="section-header">لماذا علم البيانات؟</h2>
+        <p style="color: var(--secondary); margin-bottom: 25px; font-size: 18px;">علم البيانات مو مجرد مجال تقني جديد</p>
+        
+        <div class="info-card" style="width: 100%; border-right: none; border-bottom: 2px solid var(--primary); background: rgba(255,255,255,0.02);">
+            <p style="text-align: center; font-size: 16px; line-height: 1.8;">
+                هو المجال اللي يساعدنا نفهم العالم بالأرقام والبيانات. اليوم تقريبًا كل شيء حولنا يولّد بيانات:
             </p>
-
-            <div class="highlight-box">
-
-                <p style="color: var(--text-white); font-weight: bold;">
-
-                    أنتِ لا تملك البيانات فقط،
-                    بل تملك القدرة على عرضها بإبهار.
-
-                </p>
-
-            </div>
-
-        </div>
-
-       <div class="slide">
-            <h2 class="section-header">المرحلة الأولى: منصة سطر (الأساس)</h2>
-            <div class="grid-3">
-                <div class="card"><i class="fa-solid fa-database"></i><h3>قواعد البيانات SQL</h3><p>SQL 101, 102, 103: تعلم استخراج البيانات باحترافية.</p></div>
-                <div class="card"><i class="fa-brands fa-python"></i><h3>برمجة بايثون</h3><p>Python 101, 102: تأسيس قوي في لغة الذكاء الاصطناعي.</p></div>
-                <div class="card"><i class="fa-solid fa-chart-pie"></i><h3>مكتبات البيانات</h3><p>NumPy & Pandas: الأدوات الفعلية لتحليل الجداول الضخمة.</p></div>
+            
+            <div class="icon-grid" style="grid-template-columns: repeat(4, 1fr); gap: 15px; margin-top: 20px;">
+                <div class="icon-item" style="padding: 10px;"><i class="fa-solid fa-mobile-screen" style="font-size: 25px;"></i><p style="font-size: 11px;">التطبيقات</p></div>
+                <div class="icon-item" style="padding: 10px;"><i class="fa-solid fa-store" style="font-size: 25px;"></i><p style="font-size: 11px;">المتاجر</p></div>
+                <div class="icon-item" style="padding: 10px;"><i class="fa-solid fa-hospital" style="font-size: 25px;"></i><p style="font-size: 11px;">المستشفيات</p></div>
+                <div class="icon-item" style="padding: 10px;"><i class="fa-solid fa-building-columns" style="font-size: 25px;"></i><p style="font-size: 11px;">البنوك</p></div>
+                <div class="icon-item" style="padding: 10px;"><i class="fa-solid fa-share-nodes" style="font-size: 25px;"></i><p style="font-size: 11px;">التواصل</p></div>
+                <div class="icon-item" style="padding: 10px;"><i class="fa-solid fa-gamepad" style="font-size: 25px;"></i><p style="font-size: 11px;">الألعاب</p></div>
+                <div class="icon-item" style="padding: 10px;"><i class="fa-solid fa-car" style="font-size: 25px;"></i><p style="font-size: 11px;">السيارات</p></div>
+                <div class="icon-item" style="padding: 10px;"><i class="fa-solid fa-clock" style="font-size: 25px;"></i><p style="font-size: 11px;">الساعات</p></div>
             </div>
         </div>
 
-        <div class="slide">
-            <h2 class="section-header">التركيز البرمجي في سطر</h2>
-            <div style="display: flex; gap: 30px; align-items: start;">
-                <ul style="flex: 1; list-style: none; font-size: 18px;">
-                    <li style="margin-bottom: 15px;"><i class="fa-solid fa-check" style="color: var(--secondary); margin-left: 10px;"></i> Python 101 & 102: تجهيز البيئة والدوال.</li>
-                    <li style="margin-bottom: 15px;"><i class="fa-solid fa-check" style="color: var(--secondary); margin-left: 10px;"></i> Pandas: أهم مكتبة لقراءة وتحليل ملفات Excel و CSV.</li>
-                    <li style="margin-bottom: 15px;"><i class="fa-solid fa-check" style="color: var(--secondary); margin-left: 10px;"></i> Matplotlib: لبناء الرسوم البيانية الاستكشافية.</li>
-                </ul>
-                <div style="flex: 1; background: #111; height: 200px; border-radius: 10px; border: 1px solid #222; display: flex; align-items: center; justify-content: center;">
-                    <i class="fa-solid fa-code" style="font-size: 80px; color: #222;"></i>
+        <div style="margin-top: 30px; text-align: center;">
+            <p style="font-weight: bold; color: var(--accent); margin-bottom: 20px;">لكن وجود البيانات وحده ما يكفي! هنا يجي دور عالم البيانات</p>
+            
+            <div style="display: flex; justify-content: center; align-items: center; gap: 20px; flex-wrap: wrap;">
+                <div style="padding: 15px 30px; background: rgba(123, 66, 246, 0.1); border: 1px solid var(--primary); border-radius: 15px;">
+                    <span style="display: block; color: var(--secondary); font-weight: bold;">الأرقام</span>
+                    <i class="fa-solid fa-arrow-down" style="margin: 10px 0; display: block; opacity: 0.5;"></i>
+                    <span style="color: #fff;">معلومات</span>
+                </div>
+
+                <div style="font-size: 30px; color: var(--primary);">←</div>
+
+                <div style="padding: 15px 30px; background: rgba(123, 66, 246, 0.3); border: 1px solid var(--primary); border-radius: 15px;">
+                    <span style="display: block; color: var(--secondary); font-weight: bold;">المعلومات</span>
+                    <i class="fa-solid fa-arrow-down" style="margin: 10px 0; display: block; opacity: 0.5;"></i>
+                    <span style="color: #fff;">قرارات</span>
+                </div>
+
+                <div style="font-size: 30px; color: var(--primary);">←</div>
+
+                <div style="padding: 15px 30px; background: var(--primary); border-radius: 15px; box-shadow: 0 0 20px rgba(123, 66, 246, 0.5);">
+                    <span style="display: block; color: #fff; font-weight: bold;">القرارات</span>
+                    <i class="fa-solid fa-arrow-down" style="margin: 10px 0; display: block; opacity: 0.8;"></i>
+                    <span style="color: #fff;">نتائج حقيقية</span>
                 </div>
             </div>
         </div>
+    </div>
 
-        <div class="slide">
-            <h2 class="section-header">الجدول الزمني لإنهاء مسار سطر</h2>
-            <table>
-                <tr><th>الأسبوع</th><th>الموضوع</th><th>التركيز</th></tr>
-                <tr><td>1 - 2</td><td>SQL</td><td>الاستعلامات والربط</td></tr>
-                <tr><td>3 - 4</td><td>بايثون</td><td>أساسيات البرمجة</td></tr>
-                <tr><td>5 - 6</td><td>تحليل البيانات</td><td>NumPy & Pandas</td></tr>
-                <tr><td>7 - 8</td><td>مشروع نهائي</td><td>تطبيق عملي كامل</td></tr>
-            </table>
-            <p style="margin-top: 20px; font-size: 14px; color: var(--text-gray);">* الخطة تفترض دراسة 1-2 ساعة يومياً.</p>
+
+
+
+
+    <!-- Slide3: What Data Science Does -->
+<div class="slide">
+    <h2 class="section-header"> ماذا يفعل علم البيانات؟</h2>
+    <p style="color: var(--text-dim); margin-bottom: 30px; font-size: 16px;">القوة الحقيقية تكمن في النتائج التي يحققها:</p>
+    
+    <div class="content-grid" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; width: 100%;">
+        
+        <!-- البطاقة 1 -->
+        <div class="info-card" style="border-top: 3px solid var(--secondary); display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 25px 15px; background: rgba(255,255,255,0.03);">
+            <i class="fa-solid fa-users-viewfinder" style="font-size: 30px; color: var(--secondary); margin-bottom: 12px;"></i>
+            <h3 style="font-size: 16px; text-align: center; color: #fff;">فهم سلوك المستخدمين</h3>
         </div>
 
-        <div class="slide">
-            <h2 class="section-header">الجسر المهني: إتقان إكسل (Excel)</h2>
-            <div style="display: flex; gap: 30px; align-items: center;">
-                <div style="flex: 1.5;">
-                    <h3 style="color: var(--secondary); margin-bottom: 20px;">لماذا إكسل بعد البرمجة يا عزيزي التقني؟</h3>
-                    <ul style="list-style: none; font-size: 18px;">
-                        <li style="margin-bottom: 15px;"><i class="fa-solid fa-comments" style="color: var(--primary); margin-left: 10px;"></i> <strong>لغة الأعمال:</strong> الوسيلة الأولى للتواصل مع المدراء.</li>
-                        <li style="margin-bottom: 15px;"><i class="fa-solid fa-magnifying-glass" style="color: var(--primary); margin-left: 10px;"></i> <strong>التدقيق السريع:</strong> أداة فحص البيانات يدوياً قبل برمجتها.</li>
-                        <li style="margin-bottom: 15px;"><i class="fa-solid fa-layer-group" style="color: var(--primary); margin-left: 10px;"></i> <strong>أدوات القوة:</strong> إتقان الـ Pivot Tables للتحليل السريع.</li>
-                    </ul>
-                    <div class="highlight-box">
-                        <p style="font-size: 15px;">💡 تعلمه كمهارة تكميلية لتعزيز سيرتك الذاتية قبل الشهادات العالمية.</p>
-                    </div>
-                </div>
-                <div style="flex: 1; text-align: center;">
-                    <i class="fa-solid fa-file-excel" style="font-size: 120px; color: #1d6f42;"></i>
-                </div>
-            </div>
+        <!-- البطاقة 2 -->
+        <div class="info-card" style="border-top: 3px solid var(--primary); display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 25px 15px; background: rgba(255,255,255,0.03);">
+            <i class="fa-solid fa-crystal-ball" style="font-size: 30px; color: var(--primary); margin-bottom: 12px;"></i>
+            <h3 style="font-size: 16px; text-align: center; color: #fff;">التنبؤ بالمستقبل</h3>
         </div>
 
-        <div class="slide">
-            <h2 class="section-header">المرحلة الثانية: الاعتمادات العالمية</h2>
-            <table>
-                <tr><th>الشهادة</th><th>المنصة</th><th>التركيز</th></tr>
-                <tr><td>Google Data Analytics</td><td>Coursera</td><td>التفكير التحليلي، Tableau، لغة R.</td></tr>
-                <tr><td>IBM Data Science</td><td>Coursera</td><td>تعلم الآلة (ML) وبايثون المتقدم.</td></tr>
-                <tr><td>Microsoft DP-100</td><td>Microsoft</td><td>تصميم حلول البيانات على سحابة Azure.</td></tr>
-            </table>
+        <!-- البطاقة 3 -->
+        <div class="info-card" style="border-top: 3px solid var(--accent); display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 25px 15px; background: rgba(255,255,255,0.03);">
+            <i class="fa-solid fa-radar" style="font-size: 30px; color: var(--accent); margin-bottom: 12px;"></i>
+            <h3 style="font-size: 16px; text-align: center; color: #fff;">اكتشاف المشاكل مبكراً</h3>
         </div>
 
-        <div class="slide">
-            <h2 class="section-header">مصادر تكميلية (بيئة التعلم)</h2>
-            <div class="grid-3">
-                <div class="card"><i class="fa-solid fa-k"></i><h3>Kaggle</h3><p>المكان الذي ستجدين فيه بيانات حقيقية للتدريب ومسابقات عالمية.</p></div>
-                <div class="card"><i class="fa-solid fa-graduation-cap"></i><h3>DataCamp</h3><p>منصة تفاعلية ممتازة للتدريب السريع على كتابة الكود.</p></div>
-                <div class="card"><i class="fa-brands fa-github"></i><h3>GitHub</h3><p>مهم جداً لرفع مشاريعك وبناء ملف أعمال يراه أصحاب العمل.</p></div>
-            </div>
+        <!-- البطاقة 4 -->
+        <div class="info-card" style="border-top: 3px solid #ffcc00; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 25px 15px; background: rgba(255,255,255,0.03);">
+            <i class="fa-solid fa-money-bill-trend-up" style="font-size: 30px; color: #ffcc00; margin-bottom: 12px;"></i>
+            <h3 style="font-size: 16px; text-align: center; color: #fff;">تحسين الأرباح</h3>
         </div>
 
-        <div class="slide">
-            <h2 class="section-header">مستقبل المجال في المملكة</h2>
-            <div style="display: flex; gap: 40px; align-items: center;">
-                <div style="font-size: 60px; font-weight: bold; color: var(--secondary);">30%+</div>
-                <div>
-                    <h3 style="color: var(--primary); margin-bottom: 10px;">رؤية 2030 والبيانات</h3>
-                    <p style="font-size: 18px; line-height: 1.6;">تعتبر البيانات "النفط الجديد" في المملكة. الطلب على علماء البيانات في تزايد مستمر، خاصة في هيئات مثل <span style="color: var(--secondary);">سدايا</span> والشركات الكبرى مثل أرامكو ونيوم.</p>
-                </div>
-            </div>
+        <!-- البطاقة 5 -->
+        <div class="info-card" style="border-top: 3px solid #ff00ff; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 25px 15px; background: rgba(255,255,255,0.03);">
+            <i class="fa-solid fa-brain-circuit" style="font-size: 30px; color: #ff00ff; margin-bottom: 12px;"></i>
+            <h3 style="font-size: 16px; text-align: center; color: #fff;">بناء أنظمة ذكية</h3>
         </div>
 
-        <div class="slide">
-            <h2 class="section-header">التطبيق هو السر</h2>
-            <p style="font-size: 22px; line-height: 1.8;">لا تكتفي بمشاهدة الدروس. سر النجاح هو أخذ ملف بيانات حقيقي من <span style="color: var(--primary);">Kaggle</span>، تنظيفه باستخدام <span style="color: var(--secondary);">Pandas</span>، ثم عرض نتائجه في  <span style="color: var(--primary);">GitHub</span>.</p>
-            <p style="margin-top: 20px; font-weight: bold; color: var(--secondary); text-align: center;">هذا المزيج هو ما سيميزك عن الجميع! عزيزي التقني</p>
-        </div>
-
-        <div class="slide" style="text-align: center;">
-            <h2 class="section-header" style="border: none; text-align: center; padding: 0;">وصلنا للنهاية؟ لا!! هذي البداية ✨</h2>
-            <p style="font-size: 24px; line-height: 1.6; color: var(--text-gray);">
-                رحلتك في التقنية ما تحتاج تكون مثالية، تحتاج استمرارية فقط.
-                كل مشروع تسويه، كل سطر كود تكتبيه، وكل مرة تتعلم فيها شيء جديد تقربك من النسخة اللي تحلم تكون فيها.
-            </p>
-            <div class="badge">You are building your future.</div>
-        </div>
-
-        <div class="slide" style="text-align: center;">
-            <i class="fa-solid fa-quote-right" style="font-size: 40px; color: var(--primary); margin-bottom: 20px;"></i>
-            <h1 style="font-size: 35px; line-height: 1.5;">"البيانات ليست مجرد أرقام، بل هي قصص تنتظر من يرويها باحترافية"</h1>
-            <p style="color: var(--secondary); margin-top: 20px; font-weight: bold; font-size: 24px;">ابدا رحلتك اليوم يا عزيزي التقني</p>
-            <p style="margin-top: 20px; color: var(--text-gray); font-size: 14px;">itsthecsrav | رهَـف</p>
-        </div>
-
-        <div class="controls">
-
-            <button class="nav-btn" onclick="prevSlide()">
-                السابق
-            </button>
-
-            <button class="nav-btn" onclick="nextSlide()">
-                التالي
-            </button>
-
-        </div>
-
-        <div class="page-indicator" id="pageNumber">
-            صفحة 1 من 12
+        <!-- البطاقة 6 -->
+        <div class="info-card" style="border-top: 3px solid #00ffcc; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 25px 15px; background: rgba(255,255,255,0.03);">
+            <i class="fa-solid fa-handshake-check" style="font-size: 30px; color: #00ffcc; margin-bottom: 12px;"></i>
+            <h3 style="font-size: 16px; text-align: center; color: #fff;">دعم اتخاذ القرار</h3>
         </div>
 
     </div>
 
-    <script>
+    <!-- تذييل السلايد -->
+    <div style="margin-top: 35px; padding: 10px 25px; border-right: 3px solid var(--secondary); background: rgba(0, 210, 255, 0.05); border-radius: 4px;">
+        <p style="font-size: 14px; font-style: italic; color: var(--secondary); margin: 0;">المستقبل لا يُتوقع عشوائيًا، بل يُقرأ من البيانات.</p>
+    </div>
+</div>
 
-        let currentSlide = 0;
 
-        const slides =
-            document.querySelectorAll('.slide');
 
-        const pageNumberDisplay =
-            document.getElementById('pageNumber');
 
-        function updateDisplay(){
 
-            slides.forEach((slide,index)=>{
 
-                slide.classList.toggle(
-                    'active',
-                    index===currentSlide
-                );
 
-            });
+<!-- Slide4: Why the Field is Growing (The Market Strength) -->
+<div class="slide">
+    <h2 class="section-header"> لماذا المجال قوي جدًا؟</h2>
+    
+    <div class="info-card" style="width: 100%; padding: 30px; background: rgba(123, 66, 246, 0.03); border: 1px dashed var(--primary); margin-bottom: 25px;">
+        <p style="font-size: 18px; line-height: 1.8; text-align: center;">
+            لأن العالم صار يعتمد على البيانات بكل شيء. <br>
+            <span style="color: var(--secondary); font-weight: bold;">الشركات اليوم ما تتخذ قرارات عشوائية</span>
+        </p>
+    </div>
 
-            pageNumberDisplay.innerText=
-            `صفحة ${currentSlide+1} من ${slides.length}`;
+    <p style="margin-bottom: 20px; color: var(--text-dim);">بل تعتمد في نجاحها على ٤ ركائز أساسية:</p>
+
+    <div style="display: flex; justify-content: center; align-items: center; gap: 15px; width: 100%; flex-wrap: wrap;">
+        <!-- ركيزة 1 -->
+        <div style="flex: 1; min-width: 140px; padding: 20px; background: rgba(0, 210, 255, 0.1); border: 1px solid var(--secondary); border-radius: 12px; text-align: center;">
+            <i class="fa-solid fa-chart-simple" style="font-size: 24px; color: var(--secondary); margin-bottom: 10px; display: block;"></i>
+            <span style="font-weight: bold; font-size: 16px;">التحليل</span>
+        </div>
+
+        <!-- ركيزة 2 -->
+        <div style="flex: 1; min-width: 140px; padding: 20px; background: rgba(123, 66, 246, 0.1); border: 1px solid var(--primary); border-radius: 12px; text-align: center;">
+            <i class="fa-solid fa-calculator" style="font-size: 24px; color: var(--primary); margin-bottom: 10px; display: block;"></i>
+            <span style="font-weight: bold; font-size: 16px;">الإحصائيات</span>
+        </div>
+
+        <!-- ركيزة 3 -->
+        <div style="flex: 1; min-width: 140px; padding: 20px; background: rgba(57, 255, 20, 0.1); border: 1px solid var(--accent); border-radius: 12px; text-align: center;">
+            <i class="fa-solid fa-eye" style="font-size: 24px; color: var(--accent); margin-bottom: 10px; display: block;"></i>
+            <span style="font-weight: bold; font-size: 16px;">التوقعات</span>
+        </div>
+
+        <!-- ركيزة 4 -->
+        <div style="flex: 1; min-width: 140px; padding: 20px; background: rgba(255, 255, 255, 0.05); border: 1px solid #fff; border-radius: 12px; text-align: center;">
+            <i class="fa-solid fa-robot" style="font-size: 24px; color: #fff; margin-bottom: 10px; display: block;"></i>
+            <span style="font-weight: bold; font-size: 16px;">الذكاء الاصطناعي</span>
+        </div>
+    </div>
+
+    <div style="margin-top: 40px; text-align: center;">
+        <div style="display: inline-block; padding: 10px 30px; background: var(--primary); border-radius: 50px; box-shadow: 0 0 20px rgba(123, 66, 246, 0.4);">
+            <p style="margin: 0; font-weight: bold; font-size: 15px;">
+                <i class="fa-solid fa-earth-americas" style="margin-left: 8px;"></i>
+                أكثر المجالات طلباً عالمياً في 2026
+            </p>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+<!-- Slide 5: What Makes This Field Unique? (The Fusion Slide) -->
+<div class="slide">
+    <h2 class="section-header"> ما الذي يميز هذا المجال؟</h2>
+    <p style="color: var(--secondary); margin-bottom: 30px; font-size: 17px;">مزيج فريد بين العقل التحليلي والروح المبدعة</p>
+    
+    <div style="display: flex; flex-direction: column; gap: 15px; width: 100%; max-width: 800px;">
+        
+        <!-- صف المهارات العلوي -->
+        <div style="display: flex; gap: 15px; width: 100%;">
+            <div class="info-card" style="flex: 1; display: flex; align-items: center; gap: 15px; padding: 20px; border-left: 4px solid var(--primary);">
+                <i class="fa-solid fa-magnifying-glass-chart" style="font-size: 24px; color: var(--primary);"></i>
+                <span style="font-weight: bold;">التحليل</span>
+            </div>
+            <div class="info-card" style="flex: 1; display: flex; align-items: center; gap: 15px; padding: 20px; border-left: 4px solid var(--secondary);">
+                <i class="fa-solid fa-code" style="font-size: 24px; color: var(--secondary);"></i>
+                <span style="font-weight: bold;">البرمجة</span>
+            </div>
+        </div>
+
+        <!-- صف المهارات الأوسط -->
+        <div style="display: flex; gap: 15px; width: 100%;">
+            <div class="info-card" style="flex: 1; display: flex; align-items: center; gap: 15px; padding: 20px; border-left: 4px solid var(--accent);">
+                <i class="fa-solid fa-brain" style="font-size: 24px; color: var(--accent);"></i>
+                <span style="font-weight: bold;">التفكير المنطقي</span>
+            </div>
+            <div class="info-card" style="flex: 1; display: flex; align-items: center; gap: 15px; padding: 20px; border-left: 4px solid #ff00ff;">
+                <i class="fa-solid fa-lightbulb" style="font-size: 24px; color: #ff00ff;"></i>
+                <span style="font-weight: bold;">الإبداع</span>
+            </div>
+        </div>
+
+        <!-- مهارة حل المشاكل (العنصر الأكبر) -->
+        <div class="info-card" style="width: 100%; display: flex; align-items: center; justify-content: center; gap: 20px; padding: 25px; background: rgba(123, 66, 246, 0.1); border: 1px solid var(--primary);">
+            <i class="fa-solid fa-puzzle-piece" style="font-size: 28px; color: var(--primary);"></i>
+            <span style="font-weight: bold; font-size: 18px;">حل المشاكل المعقدة</span>
+        </div>
+    </div>
+
+    <div style="margin-top: 35px; text-align: center;">
+        <p style="font-size: 19px; line-height: 1.6; color: #fff;">
+            يعني مو مجرد <span style="color: var(--secondary); font-family: 'Orbitron';">"CODE"</span> فقط <br>
+            <span style="background: linear-gradient(90deg, var(--primary), var(--secondary)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-weight: bold;">
+                بل فهم عميق لكيفية عمل الأشياء.
+            </span>
+        </p>
+    </div>
+</div>
+
+
+
+
+
+<!-- Slide 6: Why Choose Data Science? (The Career Growth Slide) -->
+<div class="slide">
+    <h2 class="section-header">لماذا قد تختار هذا المجال؟</h2>
+    <p style="color: var(--text-dim); margin-bottom: 30px;">لأنه ليس مجرد وظيفة، بل تذكرة نحو المستقبل:</p>
+
+    <div class="content-grid" style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; width: 100%;">
+        
+        <!-- ميزة 1 -->
+        <div class="info-card" style="display: flex; align-items: center; gap: 15px; padding: 20px; background: rgba(0, 210, 255, 0.05); border-right: 4px solid var(--secondary);">
+            <i class="fa-solid fa-earth-americas" style="font-size: 24px; color: var(--secondary);"></i>
+            <div>
+                <span style="display: block; font-weight: bold; font-size: 16px;">مطلوب عالمياً</span>
+                <small style="color: var(--text-dim); font-size: 11px;">فرص وظيفية في كل دول العالم</small>
+            </div>
+        </div>
+
+        <!-- ميزة 2 -->
+        <div class="info-card" style="display: flex; align-items: center; gap: 15px; padding: 20px; background: rgba(57, 255, 20, 0.05); border-right: 4px solid var(--accent);">
+            <i class="fa-solid fa-money-bill-wave" style="font-size: 24px; color: var(--accent);"></i>
+            <div>
+                <span style="display: block; font-weight: bold; font-size: 16px;">رواتب مرتفعة</span>
+                <small style="color: var(--text-dim); font-size: 11px;">من أعلى السلالم الوظيفية تقنياً</small>
+            </div>
+        </div>
+
+        <!-- ميزة 3 -->
+        <div class="info-card" style="display: flex; align-items: center; gap: 15px; padding: 20px; background: rgba(123, 66, 246, 0.05); border-right: 4px solid var(--primary);">
+            <i class="fa-solid fa-industry" style="font-size: 24px; color: var(--primary);"></i>
+            <div>
+                <span style="display: block; font-weight: bold; font-size: 16px;">يدخل بكل الصناعات</span>
+                <small style="color: var(--text-dim); font-size: 11px;">طب، تجارة، رياضة، طيران، إلخ</small>
+            </div>
+        </div>
+
+        <!-- ميزة 4 -->
+        <div class="info-card" style="display: flex; align-items: center; gap: 15px; padding: 20px; background: rgba(255, 255, 255, 0.05); border-right: 4px solid #fff;">
+            <i class="fa-solid fa-laptop-house" style="font-size: 24px; color: #fff;"></i>
+            <div>
+                <span style="display: block; font-weight: bold; font-size: 16px;">العمل الحر وعن بعد</span>
+                <small style="color: var(--text-dim); font-size: 11px;">حرية المكان والزمان في العمل</small>
+            </div>
+        </div>
+    </div>
+
+    <!-- الميزة الكبرى -->
+    <div class="info-card" style="width: 100%; margin-top: 20px; padding: 25px; background: linear-gradient(135deg, rgba(123, 66, 246, 0.2), rgba(0, 210, 255, 0.2)); border: 1px solid var(--secondary); text-align: center;">
+        <i class="fa-solid fa-microchip" style="font-size: 30px; color: var(--secondary); margin-bottom: 15px; display: block;"></i>
+        <h3 style="font-size: 18px; color: #fff; margin: 0;">يفتح أبواب الذكاء الاصطناعي والتقنيات الحديثة</h3>
+        <p style="font-size: 13px; color: var(--secondary); margin-top: 8px; font-weight: bold;">بوابة الدخول لأقوى ثورة تقنية في التاريخ</p>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+<!-- Slide7: The Most Beautiful Thing (The Legendary Conclusion) -->
+<div class="slide">
+    <div style="text-align: center; margin-bottom: 40px;">
+        <h2 class="section-header" style="display: inline-block; font-size: 35px;"> أجمل شيء فيه؟</h2>
+        <p style="color: var(--secondary); font-size: 20px; margin-top: 15px; letter-spacing: 1px;">أبعد من مجرد أدوات تقنية!</p>
+    </div>
+
+    <div style="position: relative; width: 100%; max-width: 900px; padding: 40px; background: rgba(255,255,255,0.02); border-radius: 30px; border: 1px solid rgba(123, 66, 246, 0.2); overflow: hidden;">
+        
+        <!-- تأثير خلفية ضوئي خفيف -->
+        <div style="position: absolute; top: -50%; left: -50%; width: 200%; height: 200%; background: radial-gradient(circle, rgba(123, 66, 246, 0.05) 0%, transparent 70%); z-index: 0;"></div>
+
+        <div style="position: relative; z-index: 1;">
+            <p style="font-size: 22px; text-align: center; margin-bottom: 40px; color: #fff;">
+                أنك ما تتعلم <span style="color: var(--accent); border-bottom: 2px solid var(--accent);">أداة</span> فقط! أنت تتعلم:
+            </p>
+
+            <div style="display: flex; justify-content: space-around; align-items: flex-start; gap: 20px; flex-wrap: wrap;">
+                
+                <!-- مهارة 1 -->
+                <div style="text-align: center; flex: 1; min-width: 200px;">
+                    <div style="width: 80px; height: 80px; line-height: 80px; background: rgba(123, 66, 246, 0.1); border: 2px solid var(--primary); border-radius: 50%; margin: 0 auto 20px; font-size: 30px; color: var(--primary); box-shadow: 0 0 20px rgba(123, 66, 246, 0.3);">
+                        <i class="fa-solid fa-brain"></i>
+                    </div>
+                    <h3 style="color: #fff; font-size: 20px; margin-bottom: 10px;">كيف تفكر</h3>
+                    <p style="color: var(--text-dim); font-size: 13px;">بناء عقلية منطقية تحلل كل الاحتمالات</p>
+                </div>
+
+                <!-- مهارة 2 -->
+                <div style="text-align: center; flex: 1; min-width: 200px;">
+                    <div style="width: 80px; height: 80px; line-height: 80px; background: rgba(0, 210, 255, 0.1); border: 2px solid var(--secondary); border-radius: 50%; margin: 0 auto 20px; font-size: 30px; color: var(--secondary); box-shadow: 0 0 20px rgba(0, 210, 255, 0.3);">
+                        <i class="fa-solid fa-microscope"></i>
+                    </div>
+                    <h3 style="color: #fff; font-size: 20px; margin-bottom: 10px;">كيف تحلل</h3>
+                    <p style="color: var(--text-dim); font-size: 13px;">استخراج الأنماط المخفية بين السطور</p>
+                </div>
+
+                <!-- مهارة 3 - الأسطورية -->
+                <div style="text-align: center; flex: 1; min-width: 200px;">
+                    <div style="width: 80px; height: 80px; line-height: 80px; background: rgba(57, 255, 20, 0.1); border: 2px solid var(--accent); border-radius: 50%; margin: 0 auto 20px; font-size: 30px; color: var(--accent); box-shadow: 0 0 20px rgba(57, 255, 20, 0.3);">
+                        <i class="fa-solid fa-wand-magic-sparkles"></i>
+                    </div>
+                    <h3 style="color: #fff; font-size: 20px; margin-bottom: 10px;">تحويل الفوضى</h3>
+                    <p style="color: var(--text-dim); font-size: 13px;">صناعة معنى وقيمة من ضجيج البيانات</p>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- عبارة الختام القوية -->
+    <div style="margin-top: 50px;">
+        <h3 style="font-size: 26px; font-weight: 900; text-align: center; background: linear-gradient(90deg, #fff, var(--secondary), var(--primary)); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">
+            Data Science is not a job, it's a superpower.
+        </h3>
+    </div>
+</div>
+
+
+
+
+
+
+<!-- Slide 8: IS THIS FIELD FOR YOU? (The Persona Slide) -->
+<div class="slide">
+    <h2 class="section-header">هل هذا المجال الانسب لك؟</h2>
+
+    <!-- نص المقدمة بتصميم أنيق -->
+    <div style="width: 100%; padding: 20px; background: rgba(255, 255, 255, 0.02); border-right: 4px solid var(--primary); border-radius: 4px; margin-bottom: 30px;">
+        <p style="font-size: 18px; line-height: 1.6; margin: 0;">
+            علم البيانات مو فقط للمبرمجين العباقرة أو محبي الرياضيات المعقدة.<br>
+            <span style="color: var(--secondary); font-weight: bold;">هذا المجال مناسب لك إذا كنت:</span>
+        </p>
+    </div>
+
+    <!-- شبكة المهارات/الصفات -->
+    <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; width: 100%;">
+        
+        <div class="info-card" style="display: flex; align-items: center; gap: 15px; padding: 15px; background: rgba(123, 66, 246, 0.05);">
+            <i class="fa-solid fa-brain" style="color: var(--primary); font-size: 20px;"></i>
+            <span style="font-size: 14px;">تحب التحليل والتفكير المنطقي</span>
+        </div>
+
+        <div class="info-card" style="display: flex; align-items: center; gap: 15px; padding: 15px; background: rgba(0, 210, 255, 0.05);">
+            <i class="fa-solid fa-puzzle-piece" style="color: var(--secondary); font-size: 20px;"></i>
+            <span style="font-size: 14px;">تستمتع بحل المشاكل</span>
+        </div>
+
+        <div class="info-card" style="display: flex; align-items: center; gap: 15px; padding: 15px; background: rgba(57, 255, 20, 0.05);">
+            <i class="fa-solid fa-circle-question" style="color: var(--accent); font-size: 20px;"></i>
+            <span style="font-size: 14px;">تسأل دائمًا: "ليش صار كذا؟"</span>
+        </div>
+
+        <div class="info-card" style="display: flex; align-items: center; gap: 15px; padding: 15px; background: rgba(255, 255, 255, 0.05);">
+            <i class="fa-solid fa-microchip" style="color: #fff; font-size: 20px;"></i>
+            <span style="font-size: 14px;">تحب التقنية واكتشاف الأنماط</span>
+        </div>
+
+    </div>
+
+    <!-- عبارة التميز السفلية -->
+    <div style="margin-top: 40px; text-align: center; width: 100%;">
+        <div style="display: inline-flex; align-items: center; gap: 12px; padding: 15px 40px; background: rgba(57, 255, 20, 0.1); border: 1px solid var(--accent); border-radius: 50px;">
+            <i class="fa-solid fa-magnifying-glass" style="color: var(--accent); font-size: 20px;"></i>
+            <p style="margin: 0; font-weight: bold; font-size: 18px; color: #fff;">
+                أهم مهارة بعالم البيانات؟ <span style="color: var(--accent); text-transform: uppercase; letter-spacing: 1px;">الفضول</span>
+            </p>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+<!-- Slide 9: The Transition (Ready to Start?) -->
+<div class="slide">
+    <div style="text-align: center; width: 100%; position: relative;">
+        
+        <!-- أيقونة الانطلاق مع تأثير نبض -->
+        <div style="margin-bottom: 30px; position: relative; display: inline-block;">
+            <i class="fa-solid fa-rocket" style="font-size: 60px; color: var(--secondary); filter: drop-shadow(0 0 20px var(--secondary));"></i>
+            <div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: var(--secondary); border-radius: 50%; opacity: 0.2; transform: scale(1.5); filter: blur(20px);"></div>
+        </div>
+
+        <h2 style="font-size: 35px; color: #fff; margin-bottom: 15px; font-weight: 800;">الآن تبدأ الرحلة الفعلية!</h2>
+        
+        <p style="color: var(--text-dim); font-size: 18px; max-width: 600px; margin: 0 auto 40px; line-height: 1.6;">
+            بعد ما عرفنا "ليه" علم البيانات مهم وكيف يغير العالم <br>
+            حان الوقت نجاوب على السؤال الأهم: <span style="color: var(--accent); font-weight: bold;">كيف نبدأ؟</span>
+        </p>
+
+        <!-- مسار الرحلة البصري -->
+        <div style="display: flex; justify-content: center; align-items: center; gap: 10px; margin-bottom: 40px;">
+            <div style="width: 40px; height: 4px; background: var(--primary); border-radius: 2px; opacity: 0.3;"></div>
+            <div style="width: 100px; height: 4px; background: linear-gradient(90deg, var(--primary), var(--secondary)); border-radius: 2px;"></div>
+            <div style="width: 40px; height: 4px; background: var(--secondary); border-radius: 2px; opacity: 0.3;"></div>
+        </div>
+
+        <!-- بطاقة الوجهة القادمة -->
+        <div style="display: inline-block; padding: 25px 50px; background: rgba(123, 66, 246, 0.1); border: 1px solid var(--primary); border-radius: 20px; backdrop-filter: blur(10px);">
+            <div style="display: flex; align-items: center; gap: 20px; text-align: right;">
+                <i class="fa-solid fa-map-location-dot" style="font-size: 30px; color: var(--primary);"></i>
+                <div>
+                    <h3 style="margin: 0; font-size: 20px; color: #fff;">الوجهة القادمة:</h3>
+                    <p style="margin: 5px 0 0; color: var(--secondary); font-weight: bold;">خارطة طريق تعلم علم البيانات (Roadmap)</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+<!-- Slide 10: Programming Languages (اللغات البرمجية) -->
+    <div class="slide">
+        <h2 class="section-header">CORE LANGUAGES</h2>
+        <p style="font-size: 18px; margin-bottom: 25px;">اللغات التي تحرك عالم البيانات</p>
+        <div class="icon-grid">
+            <div class="icon-item" style="border-bottom: 3px solid #3776ab;">
+                <i class="fa-brands fa-python"></i>
+                <h3 style="color: #3776ab;">Python</h3>
+                <p style="font-size: 13px;">الملكة! سهلة التعلم، تمتلك أضخم مكتبات للذكاء الاصطناعي والتحليل.</p>
+            </div>
+            <div class="icon-item" style="border-bottom: 3px solid #276dc3;">
+                <i class="fa-solid fa-r"></i>
+                <h3 style="color: #276dc3;">R Language</h3>
+                <p style="font-size: 13px;">لغة الإحصائيين الأولى، قوية جداً في الرسوم البيانية والتحليل الأكاديمي.</p>
+            </div>
+            <div class="icon-item" style="border-bottom: 3px solid #f29111;">
+                <i class="fa-solid fa-database"></i>
+                <h3 style="color: #f29111;">SQL</h3>
+                <p style="font-size: 13px;">لا غنى عنها أبداً! هي المفتاح للوصول لأي قاعدة بيانات في العالم.</p>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+<!-- Slide 11: WHY SQL FIRST? (The Foundation Slide) -->
+<div class="slide">
+    <h2 class="section-header">WHY SQL FIRST?</h2>
+
+    <div style="display: flex; gap: 25px; align-items: stretch; width: 100%;">
+        
+        <!-- الجانب الأيمن: النص المقنع -->
+        <div style="flex: 1.5; background: rgba(255, 255, 255, 0.02); padding: 25px; border-radius: 15px; border: 1px solid rgba(242, 145, 17, 0.2);">
+            <p style="font-size: 18px; line-height: 1.8; margin: 0;">
+                كثير ناس يسألون: <span style="color: var(--secondary);">ليه SQL قبل الذكاء الاصطناعي؟</span>
+                <br><br>
+                الحقيقة أن البيانات مخزنة في قواعد بيانات ضخمة. 
+                <span style="display: block; margin-top: 15px; padding: 10px; background: rgba(242, 145, 17, 0.1); border-right: 3px solid #f29111; color: #f29111; font-weight: bold;">
+                    قبل ما تتعلم كيف "تحلل" البيانات! لازم تتعلم كيف "تجيبها".
+                </span>
+            </p>
+            
+            <div style="margin-top: 20px;">
+                <p style="color: var(--text-dim); font-size: 15px; margin-bottom: 10px;">SQL تمنحك القوة لـ:</p>
+                <ul style="list-style: none; padding: 0; display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+                    <li style="font-size: 14px;"><i class="fa-solid fa-check" style="color: #f29111; margin-left: 8px;"></i>استخراج البيانات</li>
+                    <li style="font-size: 14px;"><i class="fa-solid fa-check" style="color: #f29111; margin-left: 8px;"></i>ترتيب الفوضى</li>
+                    <li style="font-size: 14px;"><i class="fa-solid fa-check" style="color: #f29111; margin-left: 8px;"></i>البحث الذكي</li>
+                    <li style="font-size: 14px;"><i class="fa-solid fa-check" style="color: #f29111; margin-left: 8px;"></i>بناء التقارير</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- الجانب الأيسر: الأيقونات (Action Grid) -->
+        <div style="flex: 1; display: grid; grid-template-rows: repeat(3, 1fr); gap: 10px;">
+            <div class="info-card" style="display: flex; align-items: center; gap: 15px; padding: 15px; border: 1px solid rgba(0, 210, 255, 0.3);">
+                <i class="fa-solid fa-magnifying-glass" style="color: var(--secondary); font-size: 20px;"></i>
+                <span style="font-size: 13px; font-weight: bold;">Search Data</span>
+            </div>
+            <div class="info-card" style="display: flex; align-items: center; gap: 15px; padding: 15px; border: 1px solid rgba(57, 255, 20, 0.3);">
+                <i class="fa-solid fa-filter" style="color: var(--accent); font-size: 20px;"></i>
+                <span style="font-size: 13px; font-weight: bold;">Filter Results</span>
+            </div>
+            <div class="info-card" style="display: flex; align-items: center; gap: 15px; padding: 15px; border: 1px solid rgba(123, 66, 246, 0.3);">
+                <i class="fa-solid fa-layer-group" style="color: var(--primary); font-size: 20px;"></i>
+                <span style="font-size: 13px; font-weight: bold;">Group Data</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- تلميح أسفل السلايد -->
+    <p style="text-align: center; margin-top: 30px; font-size: 14px; color: var(--text-dim);">
+        <i class="fa-solid fa-database" style="color: #f29111; margin-left: 5px;"></i>
+        بدون SQL، أنت مثل المحلل الذي يملك الأدوات ولكن ليس لديه المادة الخام!
+    </p>
+</div>
+
+
+
+
+
+   <!-- Slide 12: What does SQL actually do? (The Communicator) -->
+<div class="slide">
+    <h2 class="section-header"> وش تسوي SQL أصلًا؟</h2>
+    
+    <div style="text-align: center; margin-bottom: 30px;">
+        <p style="font-size: 20px; color: #fff;">هي ببساطة: <span style="background: linear-gradient(90deg, #f29111, #ffcc00); -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-weight: bold; font-family: 'Orbitron';">"لغة التخاطب مع البيانات"</span></p>
+    </div>
+
+    <!-- شبكة المهام بتصميم حديث -->
+    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; width: 100%; max-width: 900px;">
+        
+        <!-- 1 -->
+        <div style="background: rgba(242, 145, 17, 0.05); border: 1px solid rgba(242, 145, 17, 0.2); padding: 20px; border-radius: 15px; text-align: center; transition: 0.3s;">
+            <i class="fa-solid fa-magnifying-glass-plus" style="color: #f29111; font-size: 25px; margin-bottom: 10px;"></i>
+            <h4 style="font-size: 15px; color: #fff;">تبحث بعمق</h4>
+        </div>
+
+        <!-- 2 -->
+        <div style="background: rgba(0, 210, 255, 0.05); border: 1px solid rgba(0, 210, 255, 0.2); padding: 20px; border-radius: 15px; text-align: center;">
+            <i class="fa-solid fa-download" style="color: var(--secondary); font-size: 25px; margin-bottom: 10px;"></i>
+            <h4 style="font-size: 15px; color: #fff;">تسحب المعلومات</h4>
+        </div>
+
+        <!-- 3 -->
+        <div style="background: rgba(57, 255, 20, 0.05); border: 1px solid rgba(57, 255, 20, 0.2); padding: 20px; border-radius: 15px; text-align: center;">
+            <i class="fa-solid fa-arrow-down-short-wide" style="color: var(--accent); font-size: 25px; margin-bottom: 10px;"></i>
+            <h4 style="font-size: 15px; color: #fff;">ترتب الفوضى</h4>
+        </div>
+
+        <!-- 4 -->
+        <div style="background: rgba(123, 66, 246, 0.05); border: 1px solid rgba(123, 66, 246, 0.2); padding: 20px; border-radius: 15px; text-align: center;">
+            <i class="fa-solid fa-table-list" style="color: var(--primary); font-size: 25px; margin-bottom: 10px;"></i>
+            <h4 style="font-size: 15px; color: #fff;">تدمج الجداول</h4>
+        </div>
+
+        <!-- 5 -->
+        <div style="grid-column: span 2; background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.1); padding: 20px; border-radius: 15px; display: flex; align-items: center; justify-content: center; gap: 15px;">
+            <i class="fa-solid fa-chart-pie" style="color: #ff00ff; font-size: 25px;"></i>
+            <h4 style="font-size: 15px; color: #fff;">تطلع تقارير وتحليلات احترافية</h4>
+        </div>
+    </div>
+
+    <!-- زر منصة سطر الأسطوري -->
+    <div style="margin-top: 40px; text-align: center;">
+        <p style="color: var(--text-dim); font-size: 14px; margin-bottom: 15px;">جاهزة تبدئين التعلم مجاناً؟ </p>
+        <a href="https://satr.codes" target="_blank" style="text-decoration: none; display: inline-flex; align-items: center; gap: 15px; background: linear-gradient(90deg, #7b42f6, #00d2ff); padding: 15px 35px; border-radius: 50px; color: #fff; font-weight: bold; font-size: 18px; box-shadow: 0 0 30px rgba(0, 210, 255, 0.4); transition: 0.4s; border: 2px solid rgba(255,255,255,0.2);">
+            <img src="https://satr.codes/favicon.ico" style="width: 25px; filter: brightness(0) invert(1);" alt="Satr">
+            دورة SQL في منصة سطر
+            <i class="fa-solid fa-arrow-pointer-right" style="animation: bounceRight 1s infinite;"></i>
+        </a>
+    </div>
+
+    <style>
+        @keyframes bounceRight {
+            0%, 100% { transform: translateX(0); }
+            50% { transform: translateX(5px); }
         }
+    </style>
+</div>
 
-        function nextSlide(){
 
-            if(currentSlide < slides.length-1){
 
-                currentSlide++;
 
-                updateDisplay();
-            }
+
+
+<!-- Slide13: What do you learn in SQL? (The Roadmap) -->
+<div class="slide">
+    <h2 class="section-header"> وش تتعلم فيها؟</h2>
+    <p style="color: var(--text-dim); margin-bottom: 30px; font-size: 16px;">الرحلة تبدأ بخطوة عزيزي التقني وتنتهي باحتراف كامل</p>
+
+    <div style="display: flex; gap: 20px; width: 100%; align-items: stretch;">
+        
+        <!-- القسم الأول: الأساسيات -->
+        <div style="flex: 1; background: rgba(0, 210, 255, 0.03); border: 1px solid rgba(0, 210, 255, 0.2); border-radius: 20px; padding: 25px; position: relative; overflow: hidden;">
+            <div style="position: absolute; top: 0; right: 0; background: var(--secondary); color: #000; padding: 5px 15px; font-size: 11px; font-weight: bold; border-radius: 0 0 0 15px; font-family: 'Orbitron';">LEVEL 01</div>
+            
+            <h3 style="color: var(--secondary); margin-bottom: 20px; font-size: 18px;"><i class="fa-solid fa-code-branch" style="margin-left: 10px;"></i>البداية (Basics)</h3>
+            
+            <div style="display: flex; flex-direction: column; gap: 10px;">
+                <div style="background: rgba(255,255,255,0.05); padding: 10px 15px; border-radius: 8px; font-family: 'Orbitron'; color: #fff; border-right: 3px solid var(--secondary);">SELECT</div>
+                <div style="background: rgba(255,255,255,0.05); padding: 10px 15px; border-radius: 8px; font-family: 'Orbitron'; color: #fff; border-right: 3px solid var(--secondary);">WHERE</div>
+                <div style="background: rgba(255,255,255,0.05); padding: 10px 15px; border-radius: 8px; font-family: 'Orbitron'; color: #fff; border-right: 3px solid var(--secondary);">ORDER BY</div>
+                <div style="background: rgba(255,255,255,0.05); padding: 10px 15px; border-radius: 8px; font-family: 'Orbitron'; color: #fff; border-right: 3px solid var(--secondary);">GROUP BY</div>
+                <div style="background: rgba(255,255,255,0.05); padding: 10px 15px; border-radius: 8px; font-family: 'Orbitron'; color: #fff; border-right: 3px solid var(--secondary);">JOIN</div>
+            </div>
+        </div>
+
+        <!-- سهم الانتقال -->
+        <div style="display: flex; align-items: center; color: var(--primary); font-size: 30px;">
+            <i class="fa-solid fa-angles-left"></i>
+        </div>
+
+        <!-- القسم الثاني: الاحتراف -->
+        <div style="flex: 1.2; background: rgba(123, 66, 246, 0.05); border: 1px solid rgba(123, 66, 246, 0.3); border-radius: 20px; padding: 25px; position: relative; overflow: hidden;">
+            <div style="position: absolute; top: 0; right: 0; background: var(--primary); color: #fff; padding: 5px 15px; font-size: 11px; font-weight: bold; border-radius: 0 0 0 15px; font-family: 'Orbitron';">LEVEL 02</div>
+            
+            <h3 style="color: var(--primary); margin-bottom: 20px; font-size: 18px;"><i class="fa-solid fa-award" style="margin-left: 10px;"></i>الاحتراف (Advanced)</h3>
+            
+            <ul style="list-style: none; padding: 0; display: flex; flex-direction: column; gap: 15px;">
+                <li style="display: flex; align-items: center; gap: 12px; font-size: 15px;">
+                    <i class="fa-solid fa-link" style="color: var(--primary);"></i>
+                    <span>ربط الجداول المعقدة</span>
+                </li>
+                <li style="display: flex; align-items: center; gap: 12px; font-size: 15px;">
+                    <i class="fa-solid fa-chart-line" style="color: var(--primary);"></i>
+                    <span>التحليل العميق للبيانات</span>
+                </li>
+                <li style="display: flex; align-items: center; gap: 12px; font-size: 15px;">
+                    <i class="fa-solid fa-lightbulb" style="color: var(--primary);"></i>
+                    <span>استخراج الـ Insights</span>
+                </li>
+                <li style="display: flex; align-items: center; gap: 12px; font-size: 15px;">
+                    <i class="fa-solid fa-bolt" style="color: var(--primary);"></i>
+                    <span>كتابة Queries احترافية</span>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- تذييل السلايد -->
+    <div style="margin-top: 30px; text-align: center;">
+        <p style="font-size: 14px; color: var(--accent); font-weight: bold;">
+            <i class="fa-solid fa-stairs" style="margin-left: 8px;"></i>
+            تذكر: كل خبير كان في يوم من الأيام مبتدئاً بدأ بـ SELECT.
+        </p>
+    </div>
+</div>
+
+
+
+
+
+
+<!-- Slide14: Time Commitment (The Realistic Schedule) -->
+<div class="slide">
+    <h2 class="section-header">⏳ كم تحتاج وقت؟</h2>
+    
+    <div style="text-align: center; margin-bottom: 40px;">
+        <p style="font-size: 18px; color: var(--text-dim);">الالتزام البسيط يقود لنتائج كبيرة</p>
+    </div>
+
+    <div style="display: flex; justify-content: center; align-items: center; gap: 30px; width: 100%;">
+        
+        <!-- بطاقة الوقت الإجمالي -->
+        <div style="flex: 1; background: rgba(255, 255, 255, 0.03); border: 1px solid var(--secondary); border-radius: 25px; padding: 35px; text-align: center; position: relative; box-shadow: 0 10px 30px rgba(0, 210, 255, 0.1);">
+            <div style="position: absolute; top: -25px; left: 50%; transform: translateX(-50%); width: 50px; height: 50px; background: var(--secondary); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #000; font-size: 20px;">
+                <i class="fa-solid fa-calendar-check"></i>
+            </div>
+            <h3 style="color: var(--secondary); font-size: 28px; margin-bottom: 10px; font-weight: 800;">3 - 5 أسابيع</h3>
+            <p style="color: #fff; font-size: 16px; margin: 0;">مدة التعلم التقريبية</p>
+        </div>
+
+        <!-- علامة التساوي/الربط -->
+        <div style="font-size: 30px; color: var(--primary); opacity: 0.5;">
+            <i class="fa-solid fa-equals"></i>
+        </div>
+
+        <!-- بطاقة الجهد اليومي -->
+        <div style="flex: 1; background: rgba(123, 66, 246, 0.05); border: 1px solid var(--primary); border-radius: 25px; padding: 35px; text-align: center; position: relative; box-shadow: 0 10px 30px rgba(123, 66, 246, 0.1);">
+            <div style="position: absolute; top: -25px; left: 50%; transform: translateX(-50%); width: 50px; height: 50px; background: var(--primary); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #fff; font-size: 20px;">
+                <i class="fa-solid fa-stopwatch"></i>
+            </div>
+            <h3 style="color: var(--primary); font-size: 28px; margin-bottom: 10px; font-weight: 800;">1 - 2 ساعة</h3>
+            <p style="color: #fff; font-size: 16px; margin: 0;">تركيز يومي مستمر</p>
+        </div>
+
+    </div>
+
+    <!-- شريط الحالة (Progress Bar) التوضيحي -->
+    <div style="margin-top: 50px; width: 100%; max-width: 700px; margin-left: auto; margin-right: auto;">
+        <div style="display: flex; justify-content: space-between; margin-bottom: 10px; font-size: 12px; color: var(--secondary);">
+            <span>البداية من الصفر</span>
+            <span>إتقان SQL للبيانات</span>
+        </div>
+        <div style="width: 100%; height: 8px; background: rgba(255,255,255,0.1); border-radius: 10px; overflow: hidden;">
+            <div style="width: 100%; height: 100%; background: linear-gradient(90deg, var(--primary), var(--secondary)); border-radius: 10px; animation: loadProgress 2s ease-out;"></div>
+        </div>
+    </div>
+
+    <p style="text-align: center; margin-top: 30px; font-size: 14px; color: var(--accent); font-weight: bold;">
+        <i class="fa-solid fa-circle-info" style="margin-left: 5px;"></i>
+        تذكر: الاستمرارية في ساعة واحدة يومياً أفضل من 10 ساعات في أسبوع واحد!
+    </p>
+
+    <style>
+        @keyframes loadProgress {
+            from { width: 0%; }
+            to { width: 100%; }
         }
+    </style>
+</div>
 
-        function prevSlide(){
 
-            if(currentSlide > 0){
 
-                currentSlide--;
 
-                updateDisplay();
-            }
-        }
 
-        document.addEventListener('keydown',(e)=>{
+<!-- Slide 15: After SQL? Python (The Power Couple) -->
+<div class="slide">
+    <h2 class="section-header">وبعد SQL؟</h2>
+    
+    <div style="text-align: center; margin-bottom: 40px;">
+        <p style="font-size: 19px; color: #fff;">الوقت حان لننتقل إلى <span style="color: #3776ab; font-weight: bold; font-family: 'Orbitron';">Python</span></p>
+    </div>
 
-            if(
-                e.key==='ArrowLeft' ||
-                e.key==='ArrowDown'
-            ){
-                nextSlide();
-            }
+    <!-- حاوية الربط بين اللغتين -->
+    <div style="display: flex; justify-content: center; align-items: center; gap: 0; width: 100%; position: relative;">
+        
+        <!-- SQL Side -->
+        <div style="flex: 1; background: rgba(242, 145, 17, 0.05); border: 2px solid #f29111; border-radius: 20px 0 0 20px; padding: 30px; text-align: center; position: relative;">
+            <i class="fa-solid fa-database" style="font-size: 40px; color: #f29111; margin-bottom: 15px;"></i>
+            <h3 style="color: #f29111; font-size: 22px; margin-bottom: 10px;">SQL</h3>
+            <p style="font-size: 14px; color: var(--text-dim);">مهمتها: <br> <span style="color: #fff; font-weight: bold;">تستخرج وتجيب البيانات</span></p>
+        </div>
 
-            if(
-                e.key==='ArrowRight' ||
-                e.key==='ArrowUp'
-            ){
-                prevSlide();
-            }
+        <!-- سهم الربط المركزي -->
+        <div style="width: 60px; height: 60px; background: #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; z-index: 2; margin: 0 -30px; box-shadow: 0 0 20px rgba(255,255,255,0.3);">
+            <i class="fa-solid fa-plus" style="color: #000; font-size: 20px;"></i>
+        </div>
 
-        });
+        <!-- Python Side -->
+        <div style="flex: 1; background: rgba(55, 118, 171, 0.05); border: 2px solid #3776ab; border-radius: 0 20px 20px 0; padding: 30px; text-align: center;">
+            <i class="fa-brands fa-python" style="font-size: 40px; color: #3776ab; margin-bottom: 15px;"></i>
+            <h3 style="color: #3776ab; font-size: 22px; margin-bottom: 10px;">Python</h3>
+            <p style="font-size: 14px; color: var(--text-dim);">مهمتها: <br> <span style="color: #fff; font-weight: bold;">تحلل وتبني الحلول الذكية</span></p>
+        </div>
+    </div>
 
-    </script>
+    <!-- صندوق الخلاصة الأسطوري -->
+    <div style="margin-top: 40px; width: 100%; padding: 20px; background: rgba(123, 66, 246, 0.1); border-right: 4px solid var(--primary); border-radius: 4px;">
+        <p style="font-size: 16px; line-height: 1.8; margin: 0;">
+         فكرّ فيها كذا عزيزي التقني: 
+            <br>
+            <i class="fa-solid fa-angles-left" style="color: var(--primary); margin-left: 8px;"></i>
+            بدون SQL، ما عندك مادة خام تشتغل عليها.
+            <br>
+            <i class="fa-solid fa-angles-left" style="color: var(--primary); margin-left: 8px;"></i>
+            وبدون Python، المادة الخام تبقى مجرد أرقام صامتة!
+        </p>
+    </div>
+
+    <div style="margin-top: 25px; text-align: center;">
+        <span style="display: inline-block; padding: 8px 20px; background: rgba(57, 255, 20, 0.1); border: 1px solid var(--accent); border-radius: 50px; color: var(--accent); font-size: 13px; font-weight: bold;">
+            <i class="fa-solid fa-bolt-lightning" style="margin-left: 5px;"></i>
+            التكامل بينهما هو ما يصنع "عالم البيانات" الحقيقي.
+        </span>
+    </div>
+</div>
+
+
+
+
+    <!-- Slide 16: Why Python Specifically? (The Gold Standard) -->
+<div class="slide">
+    <h2 class="section-header"> ليه Python بالتحديد؟</h2>
+    
+    <div style="text-align: center; margin-bottom: 30px;">
+        <p style="font-size: 18px; color: var(--text-dim);">ليست مجرد لغة برمجة، بل هي اللغة الرسمية للمستقبل.</p>
+    </div>
+
+    <!-- شبكة المزايا -->
+    <div style="display: grid; grid-template-columns: repeat(2, 2fr); gap: 20px; width: 100%;">
+        
+        <!-- ميزة 1 -->
+        <div style="background: rgba(55, 118, 171, 0.05); border: 1px solid rgba(55, 118, 171, 0.3); padding: 20px; border-radius: 15px; display: flex; align-items: flex-start; gap: 15px;">
+            <i class="fa-solid fa-child-reaching" style="font-size: 24px; color: #ffcc00;"></i>
+            <div>
+                <h4 style="margin: 0 0 5px; color: #fff;">سهلة للمبتدئين</h4>
+                <p style="margin: 0; font-size: 13px; color: var(--text-dim);">قريبة جداً من اللغة الإنجليزية، تركيزك يكون على المنطق مو على تعقيد الكود.</p>
+            </div>
+        </div>
+
+        <!-- ميزة 2 -->
+        <div style="background: rgba(55, 118, 171, 0.05); border: 1px solid rgba(55, 118, 171, 0.3); padding: 20px; border-radius: 15px; display: flex; align-items: flex-start; gap: 15px;">
+            <i class="fa-solid fa-bolt" style="font-size: 24px; color: #3776ab;"></i>
+            <div>
+                <h4 style="margin: 0 0 5px; color: #fff;">قوية جداً</h4>
+                <p style="margin: 0; font-size: 13px; color: var(--text-dim);">تتحمل معالجة ملايين البيانات الضخمة (Big Data) بكفاءة عالية.</p>
+            </div>
+        </div>
+
+        <!-- ميزة 3 -->
+        <div style="background: rgba(55, 118, 171, 0.05); border: 1px solid rgba(55, 118, 171, 0.3); padding: 20px; border-radius: 15px; display: flex; align-items: flex-start; gap: 15px;">
+            <i class="fa-solid fa-building" style="font-size: 24px; color: #fff;"></i>
+            <div>
+                <h4 style="margin: 0 0 5px; color: #fff;">معتمدة عالمياً</h4>
+                <p style="margin: 0; font-size: 13px; color: var(--text-dim);">اللغة الأولى في Google، Meta، Netflix، وحتى NASA.</p>
+            </div>
+        </div>
+
+        <!-- ميزة 4 -->
+        <div style="background: rgba(55, 118, 171, 0.05); border: 1px solid rgba(55, 118, 171, 0.3); padding: 20px; border-radius: 15px; display: flex; align-items: flex-start; gap: 15px;">
+            <i class="fa-solid fa-brain" style="font-size: 24px; color: #ff00ff;"></i>
+            <div>
+                <h4 style="margin: 0 0 5px; color: #fff;">قلب الذكاء الاصطناعي</h4>
+                <p style="margin: 0; font-size: 13px; color: var(--text-dim);">هي الأساس لبناء نماذج تعلم الآلة (Machine Learning) والذكاء الاصطناعي.</p>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- قسم المكتبات (The Magic Section) -->
+    <div style="margin-top: 30px; padding: 20px; background: linear-gradient(90deg, rgba(55, 118, 171, 0.1), rgba(255, 204, 0, 0.1)); border-radius: 15px; border: 1px dashed #3776ab; text-align: center;">
+        <h4 style="color: #ffcc00; margin-bottom: 10px;"><i class="fa-solid fa-box-open" style="margin-left: 10px;"></i>سحر المكتبات (Libraries)</h4>
+        <p style="font-size: 14px; color: #fff; margin: 0;">
+            بايثون تمتلك مكتبات جاهزة (مثل Pandas و NumPy) تختصر عليك آلاف الأسطر البرمجية <br>
+            <span style="color: var(--secondary); font-weight: bold;">شغل أسبوع تقدر تخلصه في أسطر بسيطة!</span>
+        </p>
+    </div>
+</div>
+
+
+
+
+
+<!-- Slide17: The Python Data Stack (The Power Trio) -->
+<div class="slide">
+    <h2 class="section-header"> أهم المكتبات اللي بنستخدمها؟</h2>
+    <p style="text-align: center; color: var(--text-dim); margin-bottom: 35px;">هذه الثلاثية هي العمود الفقري لأي مشروع بيانات ناجح:</p>
+
+    <div style="display: flex; flex-direction: column; gap: 20px; width: 100%;">
+        
+        <!-- Pandas Card -->
+        <div style="display: flex; align-items: center; background: rgba(21, 2, 71, 0.1); border: 1px solid #150458; padding: 20px; border-radius: 15px; border-right: 6px solid #150458; position: relative; overflow: hidden;">
+            <div style="flex: 0 0 80px; text-align: center;">
+                <i class="fa-solid fa-table" style="font-size: 35px; color: #150458;"></i>
+            </div>
+            <div style="flex: 1; padding-right: 20px;">
+                <h3 style="color: #fff; margin: 0; font-family: 'Orbitron'; font-size: 22px;">Pandas</h3>
+                <p style="margin: 5px 0 0; color: var(--text-dim); font-size: 15px;">
+                    المنقذ في <span style="color: var(--secondary); font-weight: bold;">تحليل الجداول</span>. تتعامل مع البيانات كأنها Excel لكن بقوة برمجية خارقة.
+                </p>
+            </div>
+            <div style="position: absolute; left: -10px; opacity: 0.1; font-size: 60px; color: #150458; transform: rotate(-15deg);">
+                <i class="fa-solid fa-file-csv"></i>
+            </div>
+        </div>
+
+        <!-- NumPy Card -->
+        <div style="display: flex; align-items: center; background: rgba(77, 121, 255, 0.05); border: 1px solid #4d79ff; padding: 20px; border-radius: 15px; border-right: 6px solid #4d79ff; position: relative; overflow: hidden;">
+            <div style="flex: 0 0 80px; text-align: center;">
+                <i class="fa-solid fa-calculator" style="font-size: 35px; color: #4d79ff;"></i>
+            </div>
+            <div style="flex: 1; padding-right: 20px;">
+                <h3 style="color: #fff; margin: 0; font-family: 'Orbitron'; font-size: 22px;">NumPy</h3>
+                <p style="margin: 5px 0 0; color: var(--text-dim); font-size: 15px;">
+                    محرك <span style="color: var(--secondary); font-weight: bold;">الحسابات الرياضية</span>. هي المسؤولة عن العمليات الحسابية المعقدة والمصفوفات بسرعة الضوء.
+                </p>
+            </div>
+            <div style="position: absolute; left: -10px; opacity: 0.1; font-size: 60px; color: #4d79ff; transform: rotate(-15deg);">
+                <i class="fa-solid fa-divide"></i>
+            </div>
+        </div>
+
+        <!-- Matplotlib Card -->
+        <div style="display: flex; align-items: center; background: rgba(255, 255, 255, 0.03); border: 1px solid #fff; padding: 20px; border-radius: 15px; border-right: 6px solid #fff; position: relative; overflow: hidden;">
+            <div style="flex: 0 0 80px; text-align: center;">
+                <i class="fa-solid fa-chart-line" style="font-size: 35px; color: #fff;"></i>
+            </div>
+            <div style="flex: 1; padding-right: 20px;">
+                <h3 style="color: #fff; margin: 0; font-family: 'Orbitron'; font-size: 22px;">Matplotlib</h3>
+                <p style="margin: 5px 0 0; color: var(--text-dim); font-size: 15px;">
+                    فنانة <span style="color: var(--secondary); font-weight: bold;">الرسوم البيانية</span>. تحول الأرقام الصامتة إلى رسومات ملونة تحكي قصة البيانات.
+                </p>
+            </div>
+            <div style="position: absolute; left: -10px; opacity: 0.1; font-size: 60px; color: #fff; transform: rotate(-15deg);">
+                <i class="fa-solid fa-chart-pie"></i>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- نصيحة ختامية للسلايد -->
+    <div style="margin-top: 35px; text-align: center;">
+        <p style="background: linear-gradient(90deg, #150458, #4d79ff); padding: 10px 25px; border-radius: 50px; display: inline-block; font-size: 14px; font-weight: bold; color: #fff;">
+            بمجرد إتقان هذه الثلاثة, صرت تملك 80% من أدوات محلل البيانات!
+        </p>
+    </div>
+</div>
+
+
+
+
+
+<!-- Slide18: The Ultimate Learning Path (The Roadmap) -->
+<div class="slide">
+    <h2 class="section-header"> الترتيب الصح للمسار</h2>
+    <p style="text-align: center; color: var(--secondary); margin-bottom: 30px; font-weight: bold;">خطة العمل لعام 2026: من الصفر إلى سوق العمل</p>
+
+    <div style="position: relative; width: 100%; display: flex; flex-direction: column; gap: 12px;">
+        
+        <!-- المرحلة 1: التأسيس -->
+        <div style="display: flex; align-items: center; gap: 15px;">
+            <div style="width: 40px; height: 40px; background: #f29111; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #000; font-weight: bold; flex-shrink: 0;">1</div>
+            <div class="info-card" style="flex: 1; padding: 12px 20px; border-right: 4px solid #f29111; background: rgba(242, 145, 17, 0.05); display: flex; justify-content: space-between; align-items: center;">
+                <span style="font-weight: bold;">SQL + Excel</span>
+                <small style="color: var(--text-dim);">تأسيس التعامل مع البيانات</small>
+            </div>
+        </div>
+
+        <!-- المرحلة 2: البرمجة -->
+        <div style="display: flex; align-items: center; gap: 15px;">
+            <div style="width: 40px; height: 40px; background: #3776ab; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #fff; font-weight: bold; flex-shrink: 0;">2</div>
+            <div class="info-card" style="flex: 1; padding: 12px 20px; border-right: 4px solid #3776ab; background: rgba(55, 118, 171, 0.05); display: flex; justify-content: space-between; align-items: center;">
+                <span style="font-weight: bold;">Python Basics</span>
+                <small style="color: var(--text-dim);">تعلم لغة العصر</small>
+            </div>
+        </div>
+
+        <!-- المرحلة 3: التحليل الرقمي -->
+        <div style="display: flex; align-items: center; gap: 15px;">
+            <div style="width: 40px; height: 40px; background: var(--secondary); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #000; font-weight: bold; flex-shrink: 0;">3</div>
+            <div class="info-card" style="flex: 1; padding: 12px 20px; border-right: 4px solid var(--secondary); background: rgba(0, 210, 255, 0.05); display: flex; justify-content: space-between; align-items: center;">
+                <span style="font-weight: bold;">Pandas + NumPy</span>
+                <small style="color: var(--text-dim);">معالجة البيانات الضخمة</small>
+            </div>
+        </div>
+
+        <!-- المرحلة 4: التحليل والتمثيل -->
+        <div style="display: flex; align-items: center; gap: 15px;">
+            <div style="width: 40px; height: 40px; background: var(--accent); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #000; font-weight: bold; flex-shrink: 0;">4</div>
+            <div class="info-card" style="flex: 1; padding: 12px 20px; border-right: 4px solid var(--accent); background: rgba(57, 255, 20, 0.05); display: flex; justify-content: space-between; align-items: center;">
+                <span style="font-weight: bold;">Data Analysis & Visualization</span>
+                <small style="color: var(--text-dim);">استخراج النتائج والرسوم</small>
+            </div>
+        </div>
+
+        <!-- المرحلة 5: المستوى المتقدم -->
+        <div style="display: flex; align-items: center; gap: 15px;">
+            <div style="width: 40px; height: 40px; background: var(--primary); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #fff; font-weight: bold; flex-shrink: 0;">5</div>
+            <div class="info-card" style="flex: 1; padding: 12px 20px; border-right: 4px solid var(--primary); background: rgba(123, 66, 246, 0.05); display: flex; justify-content: space-between; align-items: center;">
+                <span style="font-weight: bold;">Machine Learning</span>
+                <small style="color: var(--text-dim);">التوقعات والذكاء الاصطناعي</small>
+            </div>
+        </div>
+
+        <!-- المرحلة 6: التوثيق والانطلاق -->
+        <div style="display: flex; align-items: center; gap: 15px;">
+            <div style="width: 40px; height: 40px; background: #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #000; font-weight: bold; flex-shrink: 0;">6</div>
+            <div class="info-card" style="flex: 1; padding: 12px 20px; border-right: 4px solid #fff; background: rgba(255, 255, 255, 0.05); display: flex; justify-content: space-between; align-items: center;">
+                <span style="font-weight: bold;">Projects & GitHub</span>
+                <small style="color: var(--text-dim);">بناء المشاريع القويه</small>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- رسالة تشجيعية -->
+    <div style="margin-top: 30px; text-align: center; border: 1px dashed var(--secondary); padding: 15px; border-radius: 10px;">
+        <p style="margin: 0; font-size: 14px; color: #fff;">
+            <i class="fa-solid fa-star" style="color: var(--secondary); margin-left: 5px;"></i>
+             التزم بهذا المسار، وستجد نفسكِ متمكنة في وقت قياسي عزيزي التقني!
+        </p>
+    </div>
+</div>
+
+
+
+<!-- Slide: Data Science Ladder (مراحل علم البيانات) -->
+    <div class="slide">
+        <h2 class="section-header">DATA SCIENCE LADDER</h2>
+        <p style="color: var(--secondary); margin-bottom: 20px;">رحلة الصعود من البيانات الخام إلى الحكمة</p>
+        <div style="display: flex; flex-direction: column; gap: 10px; width: 80%; max-width: 600px;">
+            <div style="background: rgba(123, 66, 246, 0.4); padding: 15px; border-radius: 10px; margin-left: 0%; border: 1px solid var(--primary);">
+                <i class="fa-solid fa-brain"></i> 5. الحكمة: اتخاذ قرارات ذكية وتوقع المستقبل.
+            </div>
+            <div style="background: rgba(123, 66, 246, 0.3); padding: 15px; border-radius: 10px; margin-left: 10%; border: 1px solid var(--primary);">
+                <i class="fa-solid fa-robot"></i> 4. النمذجة: بناء خوارزميات التعلم الآلي.
+            </div>
+            <div style="background: rgba(123, 66, 246, 0.2); padding: 15px; border-radius: 10px; margin-left: 20%; border: 1px solid var(--primary);">
+                <i class="fa-solid fa-magnifying-glass-chart"></i> 3. التحليل: اكتشاف الأنماط والعلاقات المخفية.
+            </div>
+            <div style="background: rgba(123, 66, 246, 0.1); padding: 15px; border-radius: 10px; margin-left: 30%; border: 1px solid var(--primary);">
+                <i class="fa-solid fa-broom"></i> 2. التنظيف: تجهيز البيانات وإزالة الأخطاء.
+            </div>
+            <div style="background: rgba(123, 66, 246, 0.05); padding: 15px; border-radius: 10px; margin-left: 40%; border: 1px solid var(--primary);">
+                <i class="fa-solid fa-download"></i> 1. الجمع: الحصول على البيانات من مصادرها.
+            </div>
+        </div>
+    </div>
+
+
+
+    
+
+
+<!-- Slide19: The Excel Phase (The Foundation Powerhouse) -->
+<div class="slide">
+    <h2 class="section-header"> مرحلة Excel: أكثر من مجرد جداول</h2>
+    
+    <div style="display: flex; gap: 20px; align-items: stretch; width: 100%;">
+        
+        <!-- الجانب الأيمن: لماذا إكسل؟ -->
+        <div style="flex: 1.2; background: rgba(33, 115, 70, 0.05); border: 1px solid rgba(33, 115, 70, 0.3); padding: 25px; border-radius: 20px;">
+            <p style="font-size: 17px; line-height: 1.8; margin: 0;">
+                إكسل هو <span style="color: #217346; font-weight: bold;">اللغة المشتركة</span> في كل شركات العالم. <br>
+                قبل ما ننتقل للأكواد المعقدة، إكسل يعلمك "روح" البيانات:
+            </p>
+            
+            <ul style="list-style: none; padding: 0; margin-top: 20px; display: flex; flex-direction: column; gap: 12px;">
+                <li style="display: flex; align-items: center; gap: 10px;">
+                    <i class="fa-solid fa-square-check" style="color: #217346;"></i>
+                    <span>تنظيف البيانات السريع (Data Cleaning)</span>
+                </li>
+                <li style="display: flex; align-items: center; gap: 10px;">
+                    <i class="fa-solid fa-square-check" style="color: #217346;"></i>
+                    <span>المعادلات الإحصائية والمنطقية</span>
+                </li>
+                <li style="display: flex; align-items: center; gap: 10px;">
+                    <i class="fa-solid fa-square-check" style="color: #217346;"></i>
+                    <span>الجداول المحورية (Pivot Tables)</span>
+                </li>
+            </ul>
+        </div>
+
+        <!-- الجانب الأيسر: الأدوات المتقدمة -->
+        <div style="flex: 1; display: flex; flex-direction: column; gap: 15px;">
+            <div class="info-card" style="background: rgba(255, 255, 255, 0.03); border: 1px solid #217346; padding: 15px; text-align: center;">
+                <i class="fa-solid fa-chart-pie" style="color: #217346; font-size: 24px; margin-bottom: 8px;"></i>
+                <h4 style="margin: 0; font-size: 14px;">Dashboards</h4>
+                <small style="color: var(--text-dim);">بناء لوحات تحكم تفاعلية</small>
+            </div>
+            
+            <div class="info-card" style="background: rgba(255, 255, 255, 0.03); border: 1px solid #217346; padding: 15px; text-align: center;">
+                <i class="fa-solid fa-bolt" style="color: #217346; font-size: 24px; margin-bottom: 8px;"></i>
+                <h4 style="margin: 0; font-size: 14px;">Power Query</h4>
+                <small style="color: var(--text-dim);">أتمتة سحب ومعالجة البيانات</small>
+            </div>
+        </div>
+    </div>
+
+    <!-- نصيحة رهيفة -->
+    <div style="margin-top: 35px; text-align: center; width: 100%;">
+        <div style="display: inline-block; padding: 12px 30px; background: #217346; color: #fff; border-radius: 50px; font-weight: bold; font-size: 15px; box-shadow: 0 5px 15px rgba(33, 115, 70, 0.3);">
+            <i class="fa-solid fa-lightbulb" style="margin-left: 10px;"></i>
+            إذا أتقنت Pivot Tables في إكسل, فهمت نصف علم البيانات!
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+<!-- Slide 20: Why Excel in Data Science? (Debunking Myths) -->
+<div class="slide">
+    <h2 class="section-header">لماذا نتعلم Excel بعلم البيانات؟</h2>
+    
+    <div style="text-align: center; margin-bottom: 30px;">
+        <p style="font-size: 18px; color: var(--text-dim);">البعض يراه "قديماً"، والخبراء يرونه <span style="color: #217346; font-weight: bold;">"العمود الفقري"</span></p>
+    </div>
+
+    <div style="display: flex; gap: 20px; width: 100%;">
+        
+        <!-- بطاقة: الاعتقاد الخاطئ -->
+        <div style="flex: 1; background: rgba(255, 0, 0, 0.05); border: 1px solid rgba(255, 0, 0, 0.2); padding: 25px; border-radius: 20px; position: relative;">
+            <i class="fa-solid fa-xmark-circle" style="position: absolute; top: 15px; left: 15px; color: #ff4d4d;"></i>
+            <h3 style="font-size: 18px; color: #ff4d4d; margin-bottom: 15px;">الاعتقاد الشائع</h3>
+            <ul style="list-style: none; padding: 0; font-size: 14px; line-height: 2; color: var(--text-dim);">
+                <li>• أداة قديمة للحسابات البسيطة.</li>
+                <li>• مجرد جداول لتنظيم المواعيد.</li>
+                <li>• لا يتحمل البيانات الكبيرة.</li>
+                <li>• بديله البرمجة فقط.</li>
+            </ul>
+        </div>
+
+        <!-- بطاقة: الحقيقة التقنية -->
+        <div style="flex: 1; background: rgba(33, 115, 70, 0.08); border: 1px solid #217346; padding: 25px; border-radius: 20px; position: relative; box-shadow: 0 0 20px rgba(33, 115, 70, 0.1);">
+            <i class="fa-solid fa-check-circle" style="position: absolute; top: 15px; left: 15px; color: #217346;"></i>
+            <h3 style="font-size: 18px; color: #217346; margin-bottom: 15px;">الحقيقة؟</h3>
+            <ul style="list-style: none; padding: 0; font-size: 14px; line-height: 2; color: #fff;">
+                <li>• أسرع أداة لاستكشاف البيانات أولياً.</li>
+                <li>• ملك "النماذج المالية" والتحليل السريع.</li>
+                <li>• واجهة بديهية لا تحتاج كتابة كود معقد.</li>
+                <li>• لغة التواصل الرسمية بين التقنيين والإدارة.</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- قسم "القوة الخفية" -->
+    <div style="margin-top: 30px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; width: 100%;">
+        <div style="text-align: center; padding: 15px; background: rgba(255,255,255,0.02); border-radius: 12px;">
+            <span style="display: block; font-size: 20px; font-weight: bold; color: #217346;">80%</span>
+            <small style="font-size: 11px; color: var(--text-dim);">من الشركات تعتمد عليه يومياً</small>
+        </div>
+        <div style="text-align: center; padding: 15px; background: rgba(255,255,255,0.02); border-radius: 12px;">
+            <span style="display: block; font-size: 20px; font-weight: bold; color: #217346;">Power Pivot</span>
+            <small style="font-size: 11px; color: var(--text-dim);">للتعامل مع ملايين السجلات</small>
+        </div>
+        <div style="text-align: center; padding: 15px; background: rgba(255,255,255,0.02); border-radius: 12px;">
+            <span style="display: block; font-size: 20px; font-weight: bold; color: #217346;">VBA / Office Scripts</span>
+            <small style="font-size: 11px; color: var(--text-dim);">للأتمتة المتقدمة</small>
+        </div>
+    </div>
+
+    <p style="text-align: center; margin-top: 25px; font-size: 15px; color: #fff; background: rgba(33, 115, 70, 0.2); padding: 10px; border-radius: 8px;">
+        💡 <b>خلاصة القول:</b> إكسل هو المختبر السريع الذي تختبر فيه فرضياتك قبل كتابة سطر برمجي واحد!
+    </p>
+</div>
+
+
+
+
+
+<!-- Slide 21: What to learn in Excel? (The Toolkit) -->
+<div class="slide">
+    <h2 class="section-header"> وش تتعلم في Excel؟</h2>
+    <p style="text-align: center; color: var(--text-dim); margin-bottom: 30px;">من تنظيم البيانات البسيط, إلى التحليل الذكي بالمعادلات</p>
+
+    <div style="display: flex; gap: 20px; width: 100%; align-items: stretch;">
+        
+        <!-- القسم الأول: التأسيس -->
+        <div style="flex: 1; background: rgba(33, 115, 70, 0.05); border: 1px solid rgba(33, 115, 70, 0.2); border-radius: 20px; padding: 25px; position: relative;">
+            <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 20px;">
+                <i class="fa-solid fa-layer-group" style="color: #217346; font-size: 22px;"></i>
+                <h3 style="color: #fff; margin: 0; font-size: 18px;">الأساسيات (Fundamentals)</h3>
+            </div>
+            
+            <div style="display: flex; flex-direction: column; gap: 12px;">
+                <div style="background: rgba(255,255,255,0.03); padding: 12px; border-radius: 10px; display: flex; align-items: center; gap: 10px;">
+                    <i class="fa-solid fa-table-cells" style="color: #217346; font-size: 14px;"></i>
+                    <span>بناء الجداول الاحترافية</span>
+                </div>
+                <div style="background: rgba(255,255,255,0.03); padding: 12px; border-radius: 10px; display: flex; align-items: center; gap: 10px;">
+                    <i class="fa-solid fa-wand-magic-sparkles" style="color: #217346; font-size: 14px;"></i>
+                    <span>التنسيق الشرطي الذكي</span>
+                </div>
+                <div style="background: rgba(255,255,255,0.03); padding: 12px; border-radius: 10px; display: flex; align-items: center; gap: 10px;">
+                    <i class="fa-solid fa-filter" style="color: #217346; font-size: 14px;"></i>
+                    <span>الفرز، الترتيب، والتصفية</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- القسم الثاني: القوة (المعادلات) -->
+        <div style="flex: 1.2; background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 20px; padding: 25px; box-shadow: 0 10px 30px rgba(0,0,0,0.2);">
+            <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 20px;">
+                <i class="fa-solid fa-function" style="color: var(--secondary); font-size: 22px;"></i>
+                <h3 style="color: #fff; margin: 0; font-size: 18px;">المعادلات (Functions)</h3>
+            </div>
+
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+                <div style="background: #217346; color: #fff; padding: 10px; border-radius: 8px; text-align: center; font-family: 'Orbitron'; font-size: 14px; font-weight: bold;">SUM</div>
+                <div style="background: #217346; color: #fff; padding: 10px; border-radius: 8px; text-align: center; font-family: 'Orbitron'; font-size: 14px; font-weight: bold;">AVERAGE</div>
+                <div style="background: #217346; color: #fff; padding: 10px; border-radius: 8px; text-align: center; font-family: 'Orbitron'; font-size: 14px; font-weight: bold;">IF</div>
+                <div style="background: #217346; color: #fff; padding: 10px; border-radius: 8px; text-align: center; font-family: 'Orbitron'; font-size: 14px; font-weight: bold;">COUNTIF</div>
+                <div style="grid-column: span 2; background: linear-gradient(90deg, #217346, #33cc33); color: #fff; padding: 12px; border-radius: 8px; text-align: center; font-family: 'Orbitron'; font-size: 16px; font-weight: bold; border: 1px solid #fff;">XLOOKUP</div>
+            </div>
+            
+            <p style="margin-top: 15px; font-size: 12px; color: var(--text-dim); text-align: center;">
+                * معادلة <span style="color: #fff;">XLOOKUP</span> هي البديل الحديث والأقوى لـ VLOOKUP التقليدية.
+            </p>
+        </div>
+    </div>
+
+    <!-- تلميح أسفل السلايد -->
+    <div style="margin-top: 30px; text-align: center;">
+        <span style="padding: 8px 20px; background: rgba(33, 115, 70, 0.1); border: 1px dashed #217346; border-radius: 50px; color: #fff; font-size: 13px;">
+            <i class="fa-solid fa-microchip" style="margin-left: 5px; color: #217346;"></i>
+            تعلم هذه المعادلات يحولك من "مُدخل بيانات" إلى "محلل بيانات" حقيقي.
+        </span>
+    </div>
+</div>
+
+
+
+
+<div class="slide">
+    <h2 class="section-header"> كم يحتاج وقت؟</h2>
+
+    <div style="display: flex; gap: 20px; align-items: stretch; width: 100%;">
+        
+        <div style="flex: 1; background: rgba(33, 115, 70, 0.05); border: 1px solid #217346; border-radius: 20px; padding: 25px; text-align: center; display: flex; flex-direction: column; justify-content: space-between;">
+            <div>
+                <i class="fa-solid fa-hourglass-half" style="font-size: 30px; color: #217346; margin-bottom: 15px;"></i>
+                <h3 style="color: #fff; font-size: 24px; margin-bottom: 10px;">أسبوعين - شهر</h3>
+                <p style="font-size: 14px; color: var(--text-dim); line-height: 1.6;">
+                    إذا كان هدفك <span style="color: #fff; font-weight: bold;">"تحليل البيانات"</span> الاحترافي، وليس مجرد الاستخدام التقليدي.
+                </p>
+            </div>
+
+            <a href="https://youtu.be/uRs8_EJqTFo?si=RCGfEEdZPHiQt7Iq" target="_blank" style="text-decoration: none; display: flex; align-items: center; justify-content: center; gap: 10px; background: rgba(255, 0, 0, 0.1); border: 1px solid #ff0000; color: #fff; padding: 12px; border-radius: 12px; margin-top: 20px; font-size: 13px; font-weight: bold; transition: 0.3s; box-shadow: 0 4px 15px rgba(255, 0, 0, 0.1);">
+                <i class="fa-brands fa-youtube" style="font-size: 18px; color: #ff0000;"></i>
+                كورس Excel المقترح (يوتيوب)
+            </a>
+        </div>
+
+        <div style="flex: 1.5; background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 20px; padding: 25px;">
+            <h3 style="color: var(--secondary); font-size: 18px; margin-bottom: 15px;">
+                <i class="fa-solid fa-star" style="margin-left: 10px;"></i>أهم نقطة: إكسل ليس بديلاً!
+            </h3>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+                <div style="background: rgba(255,255,255,0.05); padding: 10px; border-radius: 8px; font-size: 13px;">
+                    <i class="fa-solid fa-bolt" style="color: #ffcc00; margin-left: 8px;"></i>يسرّع شغلك
+                </div>
+                <div style="background: rgba(255,255,255,0.05); padding: 10px; border-radius: 8px; font-size: 13px;">
+                    <i class="fa-solid fa-magnifying-glass" style="color: var(--secondary); margin-left: 8px;"></i>يسهل المراجعة
+                </div>
+                <div style="background: rgba(255,255,255,0.05); padding: 10px; border-radius: 8px; font-size: 13px;">
+                    <i class="fa-solid fa-flex" style="color: var(--accent); margin-left: 8px;"></i>مرونة عالية
+                </div>
+                <div style="background: rgba(255,255,255,0.05); padding: 10px; border-radius: 8px; font-size: 13px;">
+                    <i class="fa-solid fa-briefcase" style="color: #fff; margin-left: 8px;"></i>مطلوب بالسوق
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div style="margin-top: 35px; text-align: center; padding: 25px; background: linear-gradient(135deg, rgba(33, 115, 70, 0.2), rgba(123, 66, 246, 0.2)); border-radius: 20px; border: 1px solid rgba(255,255,255,0.1);">
+        <h4 style="margin-bottom: 20px; color: #fff; font-size: 16px;">المعادلة اليومية للمحلل المحترف:</h4>
+        <div style="display: flex; justify-content: center; align-items: center; gap: 15px; font-family: 'Orbitron'; font-weight: bold; font-size: 20px;">
+            <span style="color: #217346;">Excel</span>
+            <i class="fa-solid fa-plus" style="font-size: 14px; color: var(--text-dim);"></i>
+            <span style="color: #f29111;">SQL</span>
+            <i class="fa-solid fa-plus" style="font-size: 14px; color: var(--text-dim);"></i>
+            <span style="color: #3776ab;">Python</span>
+        </div>
+        <p style="margin-top: 15px; font-size: 13px; color: var(--text-dim);">
+            يستخدمونها معاً يومياً كفريق واحد متكامل 
+        </p>
+    </div>
+</div>
+
+
+
+
+
+    <!-- Slide 23: Roadmap Part 1 (The Foundation) -->
+<div class="slide">
+    <h2 class="section-header">🗺️ خريطة علم البيانات (الجزء 1)</h2>
+    <p style="text-align: center; color: var(--secondary); margin-bottom: 30px;">المحطات الأولى لبناء مهندس بيانات متمكن</p>
+
+    <div style="display: flex; flex-direction: column; gap: 15px; width: 100%;">
+        
+        <!-- المحطة 1: Excel -->
+        <div style="display: flex; align-items: stretch; gap: 15px;">
+            <div style="background: #217346; width: 6px; border-radius: 10px;"></div>
+            <div style="flex: 1; background: rgba(33, 115, 70, 0.05); border: 1px solid rgba(33, 115, 70, 0.2); padding: 15px; border-radius: 12px;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                    <span style="color: #217346; font-weight: bold; font-size: 16px;">🟣 1. Excel (فهم البيانات)</span>
+                    <span style="font-size: 11px; background: #217346; color: #fff; padding: 2px 8px; border-radius: 4px;">⏳ 1 – 2 أسبوع</span>
+                </div>
+                <p style="font-size: 13px; margin: 0; color: var(--text-dim);">التعامل مع الجداول، الدوال الأساسية، Pivot Tables، والـ Charts.</p>
+                <div style="margin-top: 8px; font-size: 12px; color: #fff;"> الهدف: فهم "شكل البيانات" وكيفية عرضها وتلخيصها.</div>
+            </div>
+        </div>
+
+        <!-- المحطة 2: SQL -->
+        <div style="display: flex; align-items: stretch; gap: 15px;">
+            <div style="background: #f29111; width: 6px; border-radius: 10px;"></div>
+            <div style="flex: 1; background: rgba(242, 145, 17, 0.05); border: 1px solid rgba(242, 145, 17, 0.2); padding: 15px; border-radius: 12px;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                    <span style="color: #f29111; font-weight: bold; font-size: 16px;">🟡 2. SQL (الوصول للبيانات)</span>
+                    <span style="font-size: 11px; background: #f29111; color: #000; padding: 2px 8px; border-radius: 4px;"> 3 – 4 أسابيع</span>
+                </div>
+                <p style="font-size: 13px; margin: 0; color: var(--text-dim);">إتقان Select, Join, Group By، والتعامل مع قواعد البيانات الحقيقية.</p>
+                <div style="margin-top: 8px; font-size: 12px; color: #fff;"> الهدف: استخراج أي بيانات من أي نظام في العالم.</div>
+            </div>
+        </div>
+
+        <!-- المحطة 3: Python -->
+        <div style="display: flex; align-items: stretch; gap: 15px;">
+            <div style="background: #3776ab; width: 6px; border-radius: 10px;"></div>
+            <div style="flex: 1; background: rgba(55, 118, 171, 0.05); border: 1px solid rgba(55, 118, 171, 0.2); padding: 15px; border-radius: 12px;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                    <span style="color: #3776ab; font-weight: bold; font-size: 16px;">🔵 3. Python (التحليل الحقيقي)</span>
+                    <span style="font-size: 11px; background: #3776ab; color: #fff; padding: 2px 8px; border-radius: 4px;"> 4 – 6 أسابيع</span>
+                </div>
+                <p style="font-size: 13px; margin: 0; color: var(--text-dim);">تعلم البرمجة، التعامل مع ملفات البيانات، ومكتبات Pandas و NumPy.</p>
+                <div style="margin-top: 8px; font-size: 12px; color: #fff;"> الهدف: تحليل البيانات برمجياً وبناء حلول مؤتمتة.</div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+
+<!-- Slide 24: Roadmap Part 2 (The Pro Path) -->
+<div class="slide">
+    <h2 class="section-header"> خريطة علم البيانات (الجزء 2)</h2>
+    <p style="text-align: center; color: var(--primary); margin-bottom: 25px;">من تنظيف البيانات إلى صناعة المستقبل بالـ AI</p>
+
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; width: 100%;">
+        
+        <!-- 4. التحليل والتنظيف -->
+        <div style="background: rgba(57, 255, 20, 0.03); border: 1px solid #39ff14; padding: 15px; border-radius: 15px;">
+            <div style="display: flex; justify-content: space-between; font-size: 11px; margin-bottom: 5px;">
+                <span style="color: #39ff14;">🟢 المرحلة 4</span>
+                <span style="color: var(--text-dim);">3-4 أسابيع</span>
+            </div>
+            <h4 style="margin: 0 0 10px; font-size: 15px;">تنظيف وتحليل البيانات</h4>
+            <p style="font-size: 12px; color: var(--text-dim); margin-bottom: 8px;">إزالة الأخطاء، معالجة القيم المفقودة، واستخراج الـ Insights.</p>
+            <div style="font-size: 11px; font-weight: bold; color: #fff;"> تحويل الفوضى لبيانات مفهومة.</div>
+        </div>
+
+        <!-- 5. التصوير البياني -->
+        <div style="background: rgba(255, 204, 0, 0.03); border: 1px solid #ffcc00; padding: 15px; border-radius: 15px;">
+            <div style="display: flex; justify-content: space-between; font-size: 11px; margin-bottom: 5px;">
+                <span style="color: #ffcc00;">🟠 المرحلة 5</span>
+                <span style="color: var(--text-dim);">2-3 أسابيع</span>
+            </div>
+            <h4 style="margin: 0 0 10px; font-size: 15px;">Visualization</h4>
+            <p style="font-size: 12px; color: var(--text-dim); margin-bottom: 8px;">Power BI, Matplotlib, Seaborn وبناء الـ Dashboards.</p>
+            <div style="font-size: 11px; font-weight: bold; color: #fff;">🎯 تحويل التحليل إلى قصص بصرية.</div>
+        </div>
+
+        <!-- 6. Machine Learning -->
+        <div style="background: rgba(123, 66, 246, 0.03); border: 1px solid var(--primary); padding: 15px; border-radius: 15px; grid-column: span 2;">
+            <div style="display: flex; justify-content: space-between; font-size: 11px; margin-bottom: 5px;">
+                <span style="color: var(--primary);">🔴 المرحلة 6</span>
+                <span style="color: var(--text-dim);">4-6 أسابيع</span>
+            </div>
+            <div style="display: flex; gap: 20px; align-items: center;">
+                <div style="flex: 1;">
+                    <h4 style="margin: 0 0 5px; font-size: 15px;">Machine Learning (الذكاء التحليلي)</h4>
+                    <p style="font-size: 12px; color: var(--text-dim);">التوقع (Prediction)، التصنيف، وتدريب النماذج الذكية.</p>
+                </div>
+                <div style="background: var(--primary); color: #fff; padding: 8px 15px; border-radius: 8px; font-size: 12px; text-align: center;">
+                    🎯 جعل البيانات <br> تتوقع المستقبل!
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- المحطة الأخيرة: GitHub -->
+    <div style="margin-top: 20px; width: 100%; background: linear-gradient(90deg, #24292e, #000); border-radius: 12px; padding: 15px; display: flex; align-items: center; gap: 20px; border: 1px solid #fff;">
+        <i class="fa-brands fa-github" style="font-size: 30px; color: #fff;"></i>
+        <div>
+            <h4 style="margin: 0; font-size: 14px; color: #fff;">⚫ المرحلة 7: المشاريع + البورتفوليو</h4>
+            <p style="margin: 5px 0 0; font-size: 12px; color: var(--text-dim);">تطبيق مشاريع حقيقية ورفعها على GitHub لتأكيد خبرتك.</p>
+        </div>
+        <div style="margin-right: auto; font-family: 'Orbitron'; color: var(--accent); font-size: 12px;">ALWAYS ON</div>
+    </div>
+</div>
+
+
+
+
+
+<!-- Slide 25: Strategy & Resources (The Golden Advice) -->
+<div class="slide">
+    <h2 class="section-header"> الاهم لا تتعلم كل شيء نظريًا عزيزي التقني!</h2>
+    
+    <!-- قاعدة الـ 70/30 -->
+    <div style="display: flex; justify-content: center; align-items: center; gap: 40px; margin-bottom: 35px; background: rgba(255,255,255,0.03); padding: 25px; border-radius: 20px; border: 1px dashed rgba(255,255,255,0.1);">
+        <div style="text-align: center;">
+            <div style="font-size: 40px; font-weight: 800; color: var(--secondary); font-family: 'Orbitron';">30%</div>
+            <div style="font-size: 14px; color: var(--text-dim);">نظري</div>
+        </div>
+        <div style="font-size: 30px; color: var(--primary); opacity: 0.5;"><i class="fa-solid fa-plus"></i></div>
+        <div style="text-align: center;">
+            <div style="font-size: 55px; font-weight: 800; color: var(--accent); font-family: 'Orbitron'; text-shadow: 0 0 20px rgba(57, 255, 20, 0.4);">70%</div>
+            <div style="font-size: 16px; color: #fff; font-weight: bold;">تطبيق عملي</div>
+        </div>
+    </div>
+
+    <!-- الروابط الأساسية -->
+    <div style="display: grid; grid-template-columns: 1fr; gap: 12px; width: 100%; max-width: 700px; margin: 0 auto;">
+        
+        <!-- سطر -->
+        <a href="https://satr.codes" target="_blank" style="text-decoration: none; display: flex; align-items: center; gap: 15px; background: linear-gradient(90deg, #7b42f6, #00d2ff); padding: 12px 20px; border-radius: 12px; color: #fff;">
+            <i class="fa-solid fa-star" style="font-size: 20px;"></i>
+            <div style="flex: 1;">
+                <div style="font-weight: bold; font-size: 15px;">المصدر الأساسي: منصة سطر</div>
+                <small style="opacity: 0.8; font-size: 11px;">دليل شامل ومحتوى عربي جبار</small>
+            </div>
+            <i class="fa-solid fa-chevron-left"></i>
+        </a>
+
+        <!-- عقلية المحلل -->
+        <a href="https://youtu.be/AluXg6mQjhU?si=2MtCai-JGWLRrEBc=عقلية+محلل+بيانات" target="_blank" style="text-decoration: none; display: flex; align-items: center; gap: 15px; background: rgba(255, 0, 0, 0.1); border: 1px solid #ff0000; padding: 12px 20px; border-radius: 12px; color: #fff;">
+            <i class="fa-brands fa-youtube" style="font-size: 20px; color: #ff0000;"></i>
+            <div style="flex: 1;">
+                <div style="font-weight: bold; font-size: 15px;">كيف تفكر كمحلل بيانات؟</div>
+                <small style="opacity: 0.8; font-size: 11px;">تطوير العقلية التحليلية (رابط يوتيوب)</small>
+            </div>
+        </a>
+
+        <!-- إكسل -->
+        <a href="https://www.youtube.com/results?search_query=excel+for+data+analysis" target="_blank" style="text-decoration: none; display: flex; align-items: center; gap: 15px; background: rgba(33, 115, 70, 0.1); border: 1px solid #217346; padding: 12px 20px; border-radius: 12px; color: #fff;">
+            <i class="fa-solid fa-file-excel" style="font-size: 20px; color: #217346;"></i>
+            <div style="flex: 1;">
+                <div style="font-weight: bold; font-size: 15px;">احترف Excel للبيانات</div>
+                <small style="opacity: 0.8; font-size: 11px;">شروحات تطبيقية مكثفة (رابط يوتيوب)</small>
+            </div>
+        </a>
+    </div>
+
+    <!-- دعوة للمشاركة -->
+    <div style="margin-top: 30px; text-align: center; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 20px;">
+        <p style="font-size: 14px; color: var(--text-dim);">
+            تواصلوا معي! لو عندكم <span style="color: var(--accent); font-weight: bold;">مصادر تعلم قوية</span> شاركوني إياها، <br>
+            وبكل حب راح أضيفها للملف عشان الكل يستفيد 
+        </p>
+    </div>
+</div>
+
+
+<!-- Slide: Career Specialization (The Path Choice) -->
+<div class="slide">
+    <h2 class="section-header"> التخصص الوظيفي, أين تجد نفسك عزيزي عالم البيانات؟</h2>
+    <p style="text-align: center; color: var(--text-dim); margin-bottom: 30px;">بعد إتقان الأساسيات، يحين وقت اختيار "المسار" الذي يمثل شغفك</p>
+
+    <div style="overflow: hidden; border: 1px solid rgba(255,255,255,0.1); border-radius: 20px; background: rgba(255,255,255,0.02);">
+        <table style="width: 100%; border-collapse: collapse; text-align: right;">
+            <thead>
+                <tr style="background: rgba(123, 66, 246, 0.2); color: var(--secondary);">
+                    <th style="padding: 20px; border-bottom: 1px solid rgba(255,255,255,0.1);">المسار الوظيفي</th>
+                    <th style="padding: 20px; border-bottom: 1px solid rgba(255,255,255,0.1);">التركيز الأساسي</th>
+                    <th style="padding: 20px; border-bottom: 1px solid rgba(255,255,255,0.1);">الأدوات المفضلة</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr style="border-bottom: 1px solid rgba(255,255,255,0.05);">
+                    <td style="padding: 20px; font-weight: bold; color: #fff;">
+                        <i class="fa-solid fa-chart-line" style="margin-left: 10px; color: var(--secondary);"></i> Data Analyst
+                    </td>
+                    <td style="padding: 20px; color: var(--text-dim);">استخراج النتائج، التحليل الوصفي، وإصدار التقارير.</td>
+                    <td style="padding: 20px;"><span style="background: rgba(33, 115, 70, 0.2); color: #217346; padding: 4px 10px; border-radius: 5px; font-size: 11px;">Excel / SQL</span></td>
+                </tr>
+                <tr style="border-bottom: 1px solid rgba(255,255,255,0.05);">
+                    <td style="padding: 20px; font-weight: bold; color: #fff;">
+                        <i class="fa-solid fa-gauge-high" style="margin-left: 10px; color: #f2c811;"></i> BI Analyst
+                    </td>
+                    <td style="padding: 20px; color: var(--text-dim);">بناء لوحات المعلومات (Dashboards) التفاعلية لمتخذي القرار.</td>
+                    <td style="padding: 20px;"><span style="background: rgba(242, 200, 17, 0.2); color: #f2c811; padding: 4px 10px; border-radius: 5px; font-size: 11px;">Power BI / Tableau</span></td>
+                </tr>
+                <tr style="border-bottom: 1px solid rgba(255,255,255,0.05);">
+                    <td style="padding: 20px; font-weight: bold; color: #fff;">
+                        <i class="fa-solid fa-microchip" style="margin-left: 10px; color: var(--primary);"></i> Data Scientist
+                    </td>
+                    <td style="padding: 20px; color: var(--text-dim);">التحليل المتقدم، حل المشكلات المعقدة بالذكاء الاصطناعي.</td>
+                    <td style="padding: 20px;"><span style="background: rgba(123, 66, 246, 0.2); color: var(--primary); padding: 4px 10px; border-radius: 5px; font-size: 11px;">Python / ML</span></td>
+                </tr>
+                <tr>
+                    <td style="padding: 20px; font-weight: bold; color: #fff;">
+                        <i class="fa-solid fa-robot" style="margin-left: 10px; color: var(--accent);"></i> ML Engineer
+                    </td>
+                    <td style="padding: 20px; color: var(--text-dim);">بناء، تدريب، ونشر نماذج التعلم الآلي في الأنظمة البرمجية.</td>
+                    <td style="padding: 20px;"><span style="background: rgba(57, 255, 20, 0.2); color: var(--accent); padding: 4px 10px; border-radius: 5px; font-size: 11px;">Scikit-Learn / Cloud</span></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- نصيحة ذكية -->
+    <div style="margin-top: 25px; text-align: center;">
+        <p style="font-size: 14px; color: #fff; background: rgba(123, 66, 246, 0.1); display: inline-block; padding: 10px 25px; border-radius: 50px; border: 1px solid var(--primary);">
+            💡 <b>نصيحة:</b> ابدأ كـ <b>Data Analyst</b> لتفهم لغة البيانات، ثم تخصص في المسار الذي يجذبك أكثر!
+        </p>
+    </div>
+</div>
+
+
+<!-- Slide 26: Data Science Certifications (The Door Opener) -->
+<div class="slide">
+    <h2 class="section-header"> الشهادات الاحترافية في علم البيانات</h2>
+    
+    <div style="text-align: center; margin-bottom: 30px;">
+        <p style="font-size: 18px; color: var(--text-dim);">الشهادة في هذا المجال ليست مجرد "ورقة" بل هي "إثبات كفاءة"</p>
+    </div>
+
+    <div style="display: flex; gap: 20px; width: 100%; align-items: stretch;">
+        
+        <!-- بطاقة فلسفة الشهادة -->
+        <div style="flex: 1; background: rgba(123, 66, 246, 0.05); border: 1px solid var(--primary); padding: 25px; border-radius: 20px; position: relative;">
+            <i class="fa-solid fa-award" style="font-size: 30px; color: var(--primary); margin-bottom: 15px;"></i>
+            <p style="font-size: 15px; line-height: 1.8; color: #fff;">
+                تعتبر الشهادات طريقة ذكية لإثبات إتقانك لـ:
+            </p>
+            <ul style="list-style: none; padding: 0; margin-top: 15px; display: flex; flex-direction: column; gap: 10px; font-size: 14px;">
+                <li style="display: flex; align-items: center; gap: 10px;">
+                    <i class="fa-solid fa-check" style="color: var(--secondary);"></i> الأدوات التقنية (Tools)
+                </li>
+                <li style="display: flex; align-items: center; gap: 10px;">
+                    <i class="fa-solid fa-check" style="color: var(--secondary);"></i> فهم احتياجات السوق
+                </li>
+                <li style="display: flex; align-items: center; gap: 10px;">
+                    <i class="fa-solid fa-check" style="color: var(--secondary);"></i> الالتزام بمسار تعليمي كامل
+                </li>
+            </ul>
+        </div>
+
+        <!-- بطاقة القاعدة الذهبية (The Golden Rule) -->
+        <div style="flex: 1.2; background: rgba(57, 255, 20, 0.03); border: 1px solid var(--accent); padding: 25px; border-radius: 20px; display: flex; flex-direction: column; justify-content: center; gap: 20px;">
+            
+            <div style="display: flex; align-items: center; gap: 15px; background: rgba(255,255,255,0.03); padding: 15px; border-radius: 12px; border-right: 4px solid var(--secondary);">
+                <span style="font-size: 24px;"></span>
+                <div>
+                    <h4 style="margin: 0; color: var(--secondary); font-size: 16px;">الشهادة تعطيك فرصة</h4>
+                    <p style="margin: 0; font-size: 12px; color: var(--text-dim);">تفتح لكِ أبواب المقابلات وتلفت نظر الـ HR.</p>
+                </div>
+            </div>
+
+            <div style="display: flex; align-items: center; gap: 15px; background: rgba(57, 255, 20, 0.1); padding: 15px; border-radius: 12px; border-right: 4px solid var(--accent);">
+                <span style="font-size: 24px;"></span>
+                <div>
+                    <h4 style="margin: 0; color: var(--accent); font-size: 16px;">المشاريع هي التي توظفك</h4>
+                    <p style="margin: 0; font-size: 12px; color: #fff;">هي الدليل القاطع على أنك قادر على حل المشكلات.</p>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- نصيحة رهيفة النهائية -->
+    <div style="margin-top: 30px; text-align: center; padding: 15px; background: rgba(255,255,255,0.02); border-radius: 10px; border: 1px dashed rgba(255,255,255,0.1);">
+        <p style="margin: 0; font-size: 14px; font-weight: bold; color: var(--secondary);">
+            <i class="fa-solid fa-lightbulb" style="margin-left: 8px;"></i>
+           المعرفة تُقرأ، لكن المهارة تُرى في المشاريع.
+        </p>
+    </div>
+</div>
+
+
+
+
+    <!-- Slide 27: Google Data Analytics (The Starting Point) -->
+<div class="slide">
+    <h2 class="section-header">🟣 أولاً: الشهادات التأسيسية (للمبتدئين)</h2>
+    
+    <div style="text-align: center; margin-bottom: 30px;">
+        <p style="font-size: 18px; color: var(--text-dim);">البداية الأقوى لأي شخص يطمح لدخول المجال </p>
+    </div>
+
+    <!-- بطاقة الشهادة الكبرى -->
+    <div style="background: rgba(66, 133, 244, 0.05); border: 1px solid #4285f4; border-radius: 25px; padding: 30px; position: relative; overflow: hidden; box-shadow: 0 10px 40px rgba(66, 133, 244, 0.1);">
+        
+        <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 25px;">
+            <div style="display: flex; align-items: center; gap: 15px;">
+                <div style="width: 50px; height: 50px; background: #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 0 15px rgba(255,255,255,0.2);">
+                    <i class="fa-brands fa-google" style="font-size: 28px; color: #4285f4;"></i>
+                </div>
+                <div>
+                    <h3 style="color: #fff; margin: 0; font-size: 20px; font-weight: 800;">Google Data Analytics</h3>
+                    <small style="color: #4285f4; font-weight: bold;">Professional Certificate</small>
+                </div>
+            </div>
+            <div style="background: #4285f4; color: #fff; padding: 5px 15px; border-radius: 50px; font-size: 12px; font-weight: bold;">
+                 الأكثر انتشاراً عالمياً
+            </div>
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 25px;">
+            <!-- ليه مهمة؟ -->
+            <div>
+                <h4 style="color: var(--secondary); margin-bottom: 10px; font-size: 16px;"><i class="fa-solid fa-circle-question" style="margin-left: 8px;"></i>ليه مهمة؟</h4>
+                <ul style="list-style: none; padding: 0; margin: 0; font-size: 13px; color: var(--text-dim); line-height: 2;">
+                    <li><i class="fa-solid fa-check" style="color: var(--accent); margin-left: 8px;"></i> أساسيات قوية في <span style="color:#fff;">Excel & SQL</span></li>
+                    <li><i class="fa-solid fa-check" style="color: var(--accent); margin-left: 8px;"></i> مهارات تحليل وتصور البيانات</li>
+                    <li><i class="fa-solid fa-check" style="color: var(--accent); margin-left: 8px;"></i> مناسبة جداً لمن يبدأ من الصفر</li>
+                </ul>
+            </div>
+
+            <!-- فائدتها -->
+            <div>
+                <h4 style="color: var(--secondary); margin-bottom: 10px; font-size: 16px;"><i class="fa-solid fa-bullseye" style="margin-left: 8px;"></i> فائدتها:</h4>
+                <p style="font-size: 13px; color: var(--text-dim); line-height: 1.6;">
+                    تأهلك لدخول سوق العمل كـ <span style="color: #fff; font-weight: bold;">محلل بيانات مبتدئ</span>، وتساعدك في بناء أول <span style="color: #fff; font-weight: bold;">Portfolio</span> حقيقي لمشاريعك.
+                </p>
+            </div>
+        </div>
+
+        <!-- زر الرابط التفاعلي -->
+        <div style="margin-top: 30px; text-align: center;">
+            <a href="https://www.coursera.org/professional-certificates/google-data-analytics" target="_blank" style="text-decoration: none; display: inline-flex; align-items: center; gap: 10px; background: #4285f4; color: #fff; padding: 12px 35px; border-radius: 50px; font-weight: 800; font-size: 15px; box-shadow: 0 5px 20px rgba(66, 133, 244, 0.4); transition: transform 0.3s ease;">
+                <i class="fa-solid fa-link"></i>
+                تصفح الشهادة وابدأ اليوم
+            </a>
+        </div>
+    </div>
+
+    <p style="text-align: center; margin-top: 25px; font-size: 12px; color: var(--text-dim);">
+        <i class="fa-solid fa-info-circle" style="margin-left: 5px;"></i>
+        نصيحة: الشهادة مدعومة في منصة Coursera ويمكن الحصول على دعم مادي (Financial Aid).
+    </p>
+</div>
+
+
+
+
+<!-- Slide: IBM Data Analyst Certificate (The Technical Deep Dive) -->
+<div class="slide">
+    <h2 class="section-header"> IBM Data Analyst / Data Science</h2>
+    
+    <div style="text-align: center; margin-bottom: 30px;">
+        <p style="font-size: 18px; color: var(--text-dim);">المحطة التي تحولك من هاوي إلى <span style="color: #054ada; font-weight: bold;">محلل تقني</span>محترف</p>
+    </div>
+
+    <div style="display: flex; gap: 20px; align-items: stretch; width: 100%;">
+        
+        <!-- الجانب الأيمن: لماذا هي قوية؟ -->
+        <div style="flex: 1.2; background: rgba(5, 74, 218, 0.05); border: 1px solid #054ada; padding: 25px; border-radius: 20px; position: relative; overflow: hidden;">
+            <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 20px;">
+                <i class="fa-solid fa-microchip" style="font-size: 28px; color: #054ada;"></i>
+                <h3 style="color: #fff; margin: 0; font-size: 20px;">ليه قوية؟</h3>
+            </div>
+            
+            <p style="font-size: 14px; color: var(--text-dim); margin-bottom: 15px;">تركيزها "تقني" بحت، وتغوص معك في صلب الأدوات:</p>
+            
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+                <div style="background: rgba(255,255,255,0.05); padding: 10px; border-radius: 8px; text-align: center; font-family: 'Orbitron'; font-size: 13px; color: #fff; border: 1px solid rgba(5, 74, 218, 0.3);">Python</div>
+                <div style="background: rgba(255,255,255,0.05); padding: 10px; border-radius: 8px; text-align: center; font-family: 'Orbitron'; font-size: 13px; color: #fff; border: 1px solid rgba(5, 74, 218, 0.3);">SQL</div>
+                <div style="background: rgba(255,255,255,0.05); padding: 10px; border-radius: 8px; text-align: center; font-family: 'Orbitron'; font-size: 13px; color: #fff; border: 1px solid rgba(5, 74, 218, 0.3);">Pandas</div>
+                <div style="background: rgba(255,255,255,0.05); padding: 10px; border-radius: 8px; text-align: center; font-family: 'Orbitron'; font-size: 13px; color: #fff; border: 1px solid rgba(5, 74, 218, 0.3);">Jupyter</div>
+            </div>
+            <p style="margin-top: 15px; font-size: 13px; color: var(--secondary); font-weight: bold;">
+                <i class="fa-solid fa-code-branch" style="margin-left: 5px;"></i> مليئة بالمشاريع التطبيقية الحقيقية
+            </p>
+        </div>
+
+        <!-- الجانب الأيسر: الفائدة والهدف -->
+        <div style="flex: 1; display: flex; flex-direction: column; gap: 15px;">
+            <div style="background: rgba(255, 255, 255, 0.02); border-right: 4px solid var(--accent); padding: 20px; border-radius: 0 12px 12px 0;">
+                <h4 style="color: var(--accent); margin: 0 0 10px; font-size: 16px;"> فائدتها:</h4>
+                <p style="font-size: 14px; line-height: 1.6; margin: 0;">
+                    تخليك تنتقل من "مستخدم أدوات" إلى <span style="color: #fff; font-weight: bold;">محلل بيانات فعلي</span> قادر على كتابة كود برمي نظيف لتحليل أعقد المشكلات.
+                </p>
+            </div>
+
+            <!-- زر الرابط -->
+            <a href="https://www.coursera.org/professional-certificates/ibm-data-analyst" target="_blank" style="text-decoration: none; background: #054ada; color: #fff; padding: 18px; border-radius: 12px; text-align: center; font-weight: 800; font-size: 15px; box-shadow: 0 10px 20px rgba(5, 74, 218, 0.3); transition: 0.3s; margin-top: auto;">
+                <i class="fa-solid fa-arrow-up-right-from-square" style="margin-left: 10px;"></i>
+                سجل في شهادة IBM الآن
+            </a>
+        </div>
+    </div>
+
+    <!-- تذييل -->
+    <div style="margin-top: 25px; text-align: center; opacity: 0.7;">
+        <i class="fa-brands fa-ibm" style="font-size: 40px; color: #fff;"></i>
+    </div>
+</div>
+
+
+
+
+<!-- Slide: Microsoft Power BI (The Job Magnet) -->
+<div class="slide">
+    <h2 class="section-header">🔵 ثانيًا: شهادات الأدوات القوية (مطلوبة في الشركات)</h2>
+    
+    <div style="text-align: center; margin-bottom: 30px;">
+        <p style="font-size: 18px; color: var(--text-dim);">الأداة التي تتحدث بها الشركات <span style="color: #f2c811; font-weight: bold;">Power BI</span></p>
+    </div>
+
+    <div style="display: flex; gap: 20px; width: 100%; align-items: stretch;">
+        
+        <!-- بطاقة التعريف بالشهادة -->
+        <div style="flex: 1.3; background: rgba(242, 200, 17, 0.05); border: 1px solid #f2c811; padding: 25px; border-radius: 20px; position: relative;">
+            <div style="display: flex; align-items: center; gap: 15px; margin-bottom: 20px;">
+                <div style="width: 45px; height: 45px; background: #f2c811; border-radius: 10px; display: flex; align-items: center; justify-content: center;">
+                    <i class="fa-solid fa-chart-simple" style="color: #000; font-size: 24px;"></i>
+                </div>
+                <div>
+                    <h3 style="color: #fff; margin: 0; font-size: 19px;">Microsoft Power BI Data Analyst</h3>
+                    <small style="color: #f2c811; font-weight: bold; font-family: 'Orbitron';">PL-300 EXAM</small>
+                </div>
+            </div>
+
+            <h4 style="color: var(--secondary); margin-bottom: 15px; font-size: 16px;"><i class="fa-solid fa-fire" style="margin-left: 8px;"></i>ليه مهمة جداً؟</h4>
+            <ul style="list-style: none; padding: 0; margin: 0; font-size: 14px; color: var(--text-dim); line-height: 2;">
+                <li><i class="fa-solid fa-check-double" style="color: #f2c811; margin-left: 8px;"></i> <span style="color: #fff;">الأكثر طلباً:</span> الأداة رقم 1 في الشركات محلياً وعالمياً.</li>
+                <li><i class="fa-solid fa-check-double" style="color: #f2c811; margin-left: 8px;"></i> <span style="color: #fff;">Dashboards:</span> بناء لوحات تفاعلية تبهر الإدارة.</li>
+                <li><i class="fa-solid fa-check-double" style="color: #f2c811; margin-left: 8px;"></i> <span style="color: #fff;">تعدد الاستخدام:</span> مطلوبة للوظائف الإدارية، المالية، والتحليلية.</li>
+            </ul>
+        </div>
+
+        <!-- بطاقة القيمة السوقية والزر -->
+        <div style="flex: 1; display: flex; flex-direction: column; gap: 15px;">
+            <div style="background: rgba(255,255,255,0.03); border: 1px dashed #f2c811; padding: 20px; border-radius: 15px; text-align: center;">
+                <i class="fa-solid fa-ranking-star" style="font-size: 30px; color: #f2c811; margin-bottom: 10px;"></i>
+                <h4 style="margin: 0; font-size: 15px; color: #fff;">القيمة السوقية</h4>
+                <p style="margin: 5px 0 0; font-size: 12px; color: var(--text-dim);">تعتبر من أعلى الشهادات طلباً ومصداقية في سوق العمل السعودي لعام 2026.</p>
+            </div>
+
+            <a href="https://learn.microsoft.com/en-us/credentials/certifications/data-analyst-associate/" target="_blank" style="text-decoration: none; background: #f2c811; color: #000; padding: 15px; border-radius: 12px; text-align: center; font-weight: 800; font-size: 14px; box-shadow: 0 10px 20px rgba(242, 200, 17, 0.2); transition: 0.3s; margin-top: auto;">
+                <i class="fa-solid fa-graduation-cap" style="margin-left: 8px;"></i>
+                تفاصيل الاختبار (PL-300)
+            </a>
+        </div>
+    </div>
+
+    <!-- تلميح أسفل السلايد -->
+    <div style="margin-top: 25px; text-align: center;">
+        <span style="font-size: 13px; color: #fff; background: rgba(242, 200, 17, 0.1); padding: 8px 20px; border-radius: 50px;">
+             نصيحة: اجمع بين <b>Excel</b> و <b>Power BI</b> لتكون "الافضل " في تحليل البيانات الإدارية.
+        </span>
+    </div>
+</div>
+
+
+<!-- Slide: Advanced Data Science (The Pro Tier) -->
+<div class="slide">
+    <h2 class="section-header">🟡 ثالثًا: شهادات علم البيانات المتقدم</h2>
+    <p style="text-align: center; color: var(--text-dim); margin-bottom: 30px;">المحطة التي تفصل بين "محلل البيانات" و "عالم البيانات" 🤖</p>
+
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; width: 100%;">
+        
+        <!-- IBM Data Science Card -->
+        <div style="background: rgba(123, 66, 246, 0.05); border: 1px solid var(--primary); padding: 25px; border-radius: 20px; position: relative;">
+            <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 20px;">
+                <i class="fa-solid fa-brain" style="font-size: 28px; color: var(--primary);"></i>
+                <h3 style="color: #fff; margin: 0; font-size: 18px;">IBM Data Science</h3>
+            </div>
+            
+            <div style="margin-bottom: 15px;">
+                <h4 style="font-size: 14px; color: var(--secondary); margin-bottom: 8px;">💡 ماذا تشمل؟</h4>
+                <div style="display: flex; flex-wrap: wrap; gap: 8px;">
+                    <span style="background: rgba(255,255,255,0.05); padding: 4px 10px; border-radius: 5px; font-size: 11px;">Python بعمق</span>
+                    <span style="background: rgba(255,255,255,0.05); padding: 4px 10px; border-radius: 5px; font-size: 11px;">Machine Learning</span>
+                    <span style="background: rgba(255,255,255,0.05); padding: 4px 10px; border-radius: 5px; font-size: 11px;">AI Basics</span>
+                </div>
+            </div>
+
+            <div style="background: rgba(123, 66, 246, 0.1); padding: 12px; border-radius: 10px; border-right: 4px solid var(--primary);">
+                <p style="margin: 0; font-size: 13px; line-height: 1.5;">
+                    <span style="color: #fff; font-weight: bold;">🎯 فائدتها:</span> بوابة دخولكِ لعالم الذكاء الاصطناعي، وتناسب المرحلة المتوسطة.
+                </p>
+            </div>
+            
+            <a href="https://www.coursera.org/professional-certificates/ibm-data-science" target="_blank" style="display: block; margin-top: 15px; text-align: center; color: var(--primary); font-size: 12px; text-decoration: underline;">رابط الشهادة</a>
+        </div>
+
+        <!-- Microsoft Azure Card -->
+        <div style="background: rgba(0, 114, 198, 0.05); border: 1px solid #0072c6; padding: 25px; border-radius: 20px;">
+            <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 20px;">
+                <i class="fa-solid fa-cloud" style="font-size: 28px; color: #0072c6;"></i>
+                <h3 style="color: #fff; margin: 0; font-size: 18px;">Azure Data Scientist</h3>
+            </div>
+
+            <div style="margin-bottom: 15px;">
+                <h4 style="font-size: 14px; color: var(--secondary); margin-bottom: 8px;">💡 فائدتها:</h4>
+                <ul style="list-style: none; padding: 0; font-size: 13px; color: var(--text-dim); line-height: 1.8;">
+                    <li><i class="fa-solid fa-check" style="color: #0072c6; margin-left: 8px;"></i> تدريب نماذج الذكاء الاصطناعي.</li>
+                    <li><i class="fa-solid fa-check" style="color: #0072c6; margin-left: 8px;"></i> العمل على البيئات السحابية (Cloud).</li>
+                    <li><i class="fa-solid fa-check" style="color: #0072c6; margin-left: 8px;"></i> احتراف ML داخل الشركات الكبرى.</li>
+                </ul>
+            </div>
+
+            <div style="margin-top: auto;">
+                <a href="https://learn.microsoft.com/en-us/credentials/certifications/azure-data-scientist/" target="_blank" style="display: block; background: #0072c6; color: #fff; text-align: center; padding: 10px; border-radius: 8px; text-decoration: none; font-weight: bold; font-size: 13px;">تصفح شهادة Azure</a>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- نصيحة ختامية للسلايد -->
+    <div style="margin-top: 25px; text-align: center; border: 1px dashed var(--secondary); padding: 15px; border-radius: 12px;">
+        <p style="margin: 0; font-size: 14px; color: #fff;">
+            💡 <span style="color: var(--secondary);">رهف تقول لك:</span> لا تبدأ هنا إلا بعد إتقان الأساسيات! هذه الشهادات هي "اللمسة النهائية" لمستقبلك المهني!
+        </p>
+    </div>
+</div>
+
+
+
+
+<!-- Slide: How to Choose the Right Certificate? (The Compass) -->
+<div class="slide">
+    <h2 class="section-header"> كيف تختار الشهادات صح؟</h2>
+    
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; width: 100%; margin-bottom: 30px;">
+        
+        <!-- المسار 1: المبتدئين -->
+        <div style="background: rgba(57, 255, 20, 0.05); border-right: 4px solid #39ff14; padding: 15px; border-radius: 8px;">
+            <h4 style="color: #39ff14; margin: 0 0 10px; font-size: 16px;">🟢 لو أنت مبتدئ:</h4>
+            <p style="margin: 0; font-size: 13px; color: #fff;">Google Data Analytics <br> <span style="color: var(--text-dim);">+ مهارات Excel & SQL</span></p>
+        </div>
+
+        <!-- المسار 2: الاحتراف -->
+        <div style="background: rgba(0, 210, 255, 0.05); border-right: 4px solid var(--secondary); padding: 15px; border-radius: 8px;">
+            <h4 style="color: var(--secondary); margin: 0 0 10px; font-size: 16px;">🔵 لو تبي احتراف تحليل:</h4>
+            <p style="margin: 0; font-size: 13px; color: #fff;">IBM Data Analyst <br> <span style="color: var(--text-dim);">+ احتراف لغة Python</span></p>
+        </div>
+
+        <!-- المسار 3: التوظيف -->
+        <div style="background: rgba(255, 0, 0, 0.05); border-right: 4px solid #ff4d4d; padding: 15px; border-radius: 8px;">
+            <h4 style="color: #ff4d4d; margin: 0 0 10px; font-size: 16px;">🔴 لو تبي وظيفة قوية:</h4>
+            <p style="margin: 0; font-size: 13px; color: #fff;">Power BI (PL-300) <br> <span style="color: var(--text-dim);">+ مشاريع GitHub قوية</span></p>
+        </div>
+
+        <!-- المسار 4: الذكاء الاصطناعي -->
+        <div style="background: rgba(123, 66, 246, 0.05); border-right: 4px solid var(--primary); padding: 15px; border-radius: 8px;">
+            <h4 style="color: var(--primary); margin: 0 0 10px; font-size: 16px;">🟣 لو تبي عالم الـ AI:</h4>
+            <p style="margin: 0; font-size: 13px; color: #fff;">IBM Data Science <br> <span style="color: var(--text-dim);">+ Machine Learning</span></p>
+        </div>
+    </div>
+
+    <!-- القاعدة الذهبية -->
+    <div style="background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(255, 255, 255, 0.1); padding: 25px; border-radius: 20px; text-align: center; position: relative; overflow: hidden;">
+        <div style="position: absolute; top: 0; left: 0; width: 100%; height: 4px; background: linear-gradient(90deg, var(--secondary), var(--accent));"></div>
+        
+        <h3 style="color: var(--secondary); margin-bottom: 15px; font-size: 20px;">أهم نقطة لازم تفهمها</h3>
+        <p style="font-size: 16px; color: #fff; margin-bottom: 20px;">الشهادة ليست الهدف, الشهادة هي <span style="color: var(--accent); font-weight: bold;">"خريطة طريق"</span> فقط.</p>
+        
+        <div style="display: flex; justify-content: center; gap: 15px; align-items: center; flex-wrap: wrap;">
+            <span style="background: rgba(255,255,255,0.05); padding: 8px 15px; border-radius: 50px; font-size: 12px; border: 1px solid var(--accent);"><i class="fa-solid fa-code" style="margin-left: 5px;"></i> مشاريعك الحقيقية</span>
+            <span style="background: rgba(255,255,255,0.05); padding: 8px 15px; border-radius: 50px; font-size: 12px; border: 1px solid var(--accent);"><i class="fa-brands fa-github" style="margin-left: 5px;"></i>  GitHub</span>
+            <span style="background: rgba(255,255,255,0.05); padding: 8px 15px; border-radius: 50px; font-size: 12px; border: 1px solid var(--accent);"><i class="fa-solid fa-brain" style="margin-left: 5px;"></i> مهارة حل المشكلات</span>
+        </div>
+        
+        <p style="margin-top: 20px; font-size: 14px; font-weight: bold; color: #fff;">التوظيف يعتمد على ما تبنينه بيديك، وليس ما يحمله ورقك!</p>
+    </div>
+</div>
+
+
+   <!-- Slide 8: Portfolio & Communities (Enhanced) -->
+<div class="slide">
+    <h2 class="section-header">أين تُبنى السمعة الرقمية؟</h2>
+    <p style="text-align: center; color: var(--text-dim); margin-bottom: 30px;">المكان الذي يحول مهاراتك من "كلام" إلى "واقع" يراه العالم</p>
+
+    <div style="display: flex; gap: 20px; width: 100%; justify-content: center;">
+        
+        <!-- GitHub Card -->
+        <div style="flex: 1; background: linear-gradient(135deg, rgba(36, 41, 46, 0.2), rgba(0, 0, 0, 0.4)); border: 1px solid #fff; padding: 25px; border-radius: 20px; text-align: center; transition: 0.3s;">
+            <i class="fa-brands fa-github" style="font-size: 45px; color: #fff; margin-bottom: 15px;"></i>
+            <h3 style="color: #fff; margin: 0 0 10px; font-size: 20px;">GitHub</h3>
+            <p style="font-size: 13px; color: var(--text-dim);">بيت "الأكواد" والمشاريع البرمجية؛ هنا يرى أصحاب العمل كيف تكتب الحلول وتنظم ملفاتك.</p>
+        </div>
+
+        <!-- Kaggle Card -->
+        <div style="flex: 1; background: linear-gradient(135deg, rgba(32, 190, 255, 0.05), rgba(32, 190, 255, 0.1)); border: 1px solid #20beff; padding: 25px; border-radius: 20px; text-align: center; transition: 0.3s;">
+            <i class="fa-solid fa-table-cells-large" style="font-size: 45px; color: #20beff; margin-bottom: 15px;"></i>
+            <h3 style="color: #20beff; margin: 0 0 10px; font-size: 20px;">Kaggle</h3>
+            <p style="font-size: 13px; color: var(--text-dim);">ملعب "علماء البيانات"؛ للمنافسة في مسابقات عالمية، الوصول لمجموعات بيانات ضخمة، والتعلم من الخبراء.</p>
+        </div>
+
+    </div>
+
+    <!-- النصيحة العامة (نصيحة ذهبية للجميع) -->
+    <div style="margin-top: 35px; background: rgba(255, 255, 255, 0.02); border: 1px dashed rgba(255, 255, 255, 0.2); padding: 20px; border-radius: 15px; text-align: center;">
+        <p style="font-size: 15px; line-height: 1.8; color: #fff; margin: 0;">
+            💡 <span style="color: var(--secondary); font-weight: bold;">قاعدة ذهبية:</span> أفضل Portfolio هو الذي يروي <span style="color: var(--accent);">قصة نجاح</span>؛ ابدئي بمشكلة حقيقية، نظفي بياناتها، حلليها، ثم اعرضي النتائج بشكل يبهر من يراها. اجمعي بين دقة التحليل وجمال العرض!
+        </p>
+    </div>
+
+    <!-- تذييل -->
+    <p style="text-align: center; margin-top: 20px; font-size: 12px; color: var(--secondary); opacity: 0.8;">
+        المشاريع المنشورة هي "السيرة الذاتية" الحقيقية في عصر البيانات.
+    </p>
+</div>
+
+
+
+<div class="slide">
+    <h2 class="section-header"> أهم نصيحة عزيزي التقني: خطوة بخطوة!</h2>
+    
+    <div style="text-align: center; margin-bottom: 30px;">
+        <p style="font-size: 18px; color: #fff; font-weight: bold;">
+             <span style="color: #ff4d4d; text-shadow: 0 0 10px rgba(255,77,77,0.3);">لا تحاول تتعلم كل شيء مرة وحدة!</span>
+        </p>
+        <p style="font-size: 14px; color: var(--text-dim); margin-top: 5px;">السر يكمن في البناء التراكمي الذكي, كل مرحلة لها سبب وهدف واضح:</p>
+    </div>
+
+    <div style="display: flex; flex-direction: column; gap: 12px; width: 100%; max-width: 700px; margin: 0 auto 30px;">
+        
+        <div style="display: flex; align-items: center; background: rgba(242, 145, 17, 0.05); border: 1px solid rgba(242, 145, 17, 0.3); padding: 12px 20px; border-radius: 12px; gap: 15px;">
+            <div style="font-family: 'Orbitron'; font-weight: bold; color: #f29111; font-size: 16px; width: 110px;">1. SQL</div>
+            <div style="width: 2px; height: 20px; background: rgba(255,255,255,0.1);"></div>
+            <div style="font-size: 14px; color: #fff; flex: 1;">مخصصة <span style="color: #f29111; font-weight: bold;">للوصول للبيانات</span> واستخراجها من الأنظمة.</div>
+            <i class="fa-solid fa-database" style="color: #f29111; opacity: 0.7;"></i>
+        </div>
+
+        <div style="display: flex; align-items: center; background: rgba(55, 118, 171, 0.05); border: 1px solid rgba(55, 118, 171, 0.3); padding: 12px 20px; border-radius: 12px; gap: 15px;">
+            <div style="font-family: 'Orbitron'; font-weight: bold; color: #3776ab; font-size: 16px; width: 110px;">2. Python</div>
+            <div style="width: 2px; height: 20px; background: rgba(255,255,255,0.1);"></div>
+            <div style="font-size: 14px; color: #fff; flex: 1;">مخصصة <span style="color: #3776ab; font-weight: bold;">للتحليل الفعلي</span>، المعالجة، والأتمتة.</div>
+            <i class="fa-solid fa-code" style="color: #3776ab; opacity: 0.7;"></i>
+        </div>
+
+        <div style="display: flex; align-items: center; background: rgba(242, 200, 17, 0.05); border: 1px solid rgba(242, 200, 17, 0.3); padding: 12px 20px; border-radius: 12px; gap: 15px;">
+            <div style="font-family: 'Orbitron'; font-weight: bold; color: #f2c811; font-size: 16px; width: 110px;">3. Data Viz</div>
+            <div style="width: 2px; height: 20px; background: rgba(255,255,255,0.1);"></div>
+            <div style="font-size: 14px; color: #fff; flex: 1;">مخصصة <span style="color: #f2c811; font-weight: bold;">لعرض النتائج</span> وسرد القصص بالبيانات البصرية.</div>
+            <i class="fa-solid fa-chart-pie" style="color: #f2c811; opacity: 0.7;"></i>
+        </div>
+
+        <div style="display: flex; align-items: center; background: rgba(123, 66, 246, 0.05); border: 1px solid rgba(123, 66, 246, 0.3); padding: 12px 20px; border-radius: 12px; gap: 15px;">
+            <div style="font-family: 'Orbitron'; font-weight: bold; color: var(--primary); font-size: 16px; width: 110px;">4. ML & AI</div>
+            <div style="width: 2px; height: 20px; background: rgba(255,255,255,0.1);"></div>
+            <div style="font-size: 14px; color: #fff; flex: 1;">مخصصة <span style="color: var(--primary); font-weight: bold;">للتوقعات الذكية</span> وقراءة السلوك المستقبلي.</div>
+            <i class="fa-solid fa-robot" style="color: var(--primary); opacity: 0.7;"></i>
+        </div>
+
+    </div>
+
+    <div style="text-align: center; padding: 15px; background: rgba(57, 255, 20, 0.02); border: 1px dashed var(--accent); border-radius: 12px; max-width: 600px; margin: 0 auto;">
+        <p style="margin: 0; font-size: 15px; font-weight: bold; color: #fff;">
+            🎯 <span style="color: var(--accent);">القاعدة الثابتة:</span> كل خطوة تبني اللي بعدهاعزيزي التقني, استمتع بالرحلة ولا تستعجل الثمر!
+        </p>
+    </div>
+</div>
+
+
+    <!-- Slide 9: Recommended Channels -->
+   <div class="slide">
+    <h2 class="section-header">مصادر إضافية ملهمة</h2>
+    <p style="text-align: center; color: var(--text-dim); margin-bottom: 35px;">قنوات ومنصات عالمية تقدم زبدة العلم في مكان واحد</p>
+
+    <div style="display: flex; flex-direction: column; gap: 15px; width: 100%; max-width: 750px; margin: 0 auto;">
+        
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+            
+            <a href="https://www.youtube.com/channel/UCITfscBBm40O9MgtqiQC00w" target="_blank" style="text-decoration: none; display: flex; align-items: center; gap: 15px; background: rgba(255, 0, 0, 0.03); border: 1px solid rgba(255, 0, 0, 0.2); padding: 15px; border-radius: 12px; color: #fff; transition: 0.3s;">
+                <i class="fa-brands fa-youtube" style="font-size: 30px; color: #ff0000;"></i>
+                <div>
+                    <h4 style="margin: 0; font-size: 15px; color: #fff;">قناة StatQuest</h4>
+                    <small style="color: var(--text-dim); font-size: 11px;">لفهم الإحصاء والـ Machine Learning ببساطة مرئية مذهلة</small>
+                </div>
+            </a>
+
+            <a href="https://www.youtube.com/channel/UCuEOSK8blSM6j5jxVp3ttnQ" target="_blank" style="text-decoration: none; display: flex; align-items: center; gap: 15px; background: rgba(255, 0, 0, 0.03); border: 1px solid rgba(255, 0, 0, 0.2); padding: 15px; border-radius: 12px; color: #fff; transition: 0.3s;">
+                <i class="fa-brands fa-youtube" style="font-size: 30px; color: #ff0000;"></i>
+                <div>
+                    <h4 style="margin: 0; font-size: 15px; color: #fff;">قناة Data School</h4>
+                    <small style="color: var(--text-dim); font-size: 11px;">شروحات تطبيقية مركزة وعميقة في علوم البيانات وبايثون</small>
+                </div>
+            </a>
+
+        </div>
+
+        <div style="display: flex; align-items: center; gap: 15px; background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(255, 255, 255, 0.1); padding: 15px; border-radius: 12px;">
+            <div style="width: 40px; height: 40px; background: rgba(0, 210, 255, 0.1); border-radius: 10px; display: flex; align-items: center; justify-content: center;">
+                <i class="fa-solid fa-graduation-cap" style="color: var(--secondary); font-size: 20px;"></i>
+            </div>
+            <div>
+                <h4 style="margin: 0; color: #fff; font-size: 15px;">منصات Coursera & Udacity</h4>
+                <p style="margin: 3px 0 0; font-size: 12px; color: var(--text-dim);">الوجهة الأولى للمسارات المهنية والشهادات المعتمدة من كبرى الشركات العالمية.</p>
+            </div>
+        </div>
+
+    </div>
+
+    <div style="margin-top: 30px; text-align: center;">
+        <p style="font-size: 13px; color: var(--accent); font-weight: bold;">
+             نصيحة: تابع هذه القنوات بالتوازي مع تطبيقك العملي لتبسيط أعقد المفاهيم الرياضية والبرمجية!
+        </p>
+    </div>
+</div>
+
+
+
+<div class="slide">
+    <h2 class="section-header">عزيزي التقني فيه شيء مهم لازم تعرفه قبل تبدأ</h2>
+    
+    <div style="text-align: center; margin-bottom: 35px;">
+        <p style="font-size: 20px; color: #fff; font-weight: bold; background: rgba(255, 77, 77, 0.1); border: 1px solid #ff4d4d; display: inline-block; padding: 10px 30px; border-radius: 50px; box-shadow: 0 0 20px rgba(255, 77, 77, 0.2);">
+             علم البيانات ليس حفظ أدوات!
+        </p>
+    </div>
+
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; width: 100%; max-width: 750px; margin: 0 auto 35px;">
+        
+        <div style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.1); padding: 20px; border-radius: 15px; display: flex; align-items: center; gap: 15px;">
+            <div style="width: 40px; height: 40px; background: rgba(123, 66, 246, 0.2); border-radius: 10px; display: flex; align-items: center; justify-content: center;">
+                <i class="fa-solid fa-brain" style="color: var(--primary); font-size: 20px;"></i>
+            </div>
+            <div>
+                <h4 style="margin: 0; color: #fff; font-size: 16px;">طريقة تفكير</h4>
+            </div>
+        </div>
+
+        <div style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.1); padding: 20px; border-radius: 15px; display: flex; align-items: center; gap: 15px;">
+            <div style="width: 40px; height: 40px; background: rgba(0, 210, 255, 0.2); border-radius: 10px; display: flex; align-items: center; justify-content: center;">
+                <i class="fa-solid fa-magnifying-glass-chart" style="color: var(--secondary); font-size: 20px;"></i>
+            </div>
+            <div>
+                <h4 style="margin: 0; color: #fff; font-size: 16px;">تحليل متعمق</h4>
+            </div>
+        </div>
+
+        <div style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.1); padding: 20px; border-radius: 15px; display: flex; align-items: center; gap: 15px;">
+            <div style="width: 40px; height: 40px; background: rgba(57, 255, 20, 0.2); border-radius: 10px; display: flex; align-items: center; justify-content: center;">
+                <i class="fa-solid fa-chart-user" style="color: var(--accent); font-size: 20px;"></i>
+            </div>
+            <div>
+                <h4 style="margin: 0; color: #fff; font-size: 16px;">فهم للبيانات ورؤيتها</h4>
+            </div>
+        </div>
+
+        <div style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.1); padding: 20px; border-radius: 15px; display: flex; align-items: center; gap: 15px;">
+            <div style="width: 40px; height: 40px; background: rgba(252, 196, 25, 0.2); border-radius: 10px; display: flex; align-items: center; justify-content: center;">
+                <i class="fa-solid fa-lightbulb" style="color: #fcc419; font-size: 20px;"></i>
+            </div>
+            <div>
+                <h4 style="margin: 0; color: #fff; font-size: 16px;">حل مشاكل حقيقية</h4>
+            </div>
+        </div>
+
+    </div>
+
+    <div style="text-align: center; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 25px;">
+        <p style="font-size: 15px; color: var(--text-dim); line-height: 1.8; margin: 0;">
+            الأدوات والتقنيات تتغير وتتطور باستمرار <br>
+            لكن <span style="color: var(--accent); font-weight: bold; text-shadow: 0 0 10px rgba(57, 255, 20, 0.5);">التفكير التحليلي</span> هو الثابت الوحيد الذي يمنحكِ القوة والتميز الفعلي في هذا المجال.
+        </p>
+    </div>
+</div>
+
+
+
+    <!-- Slide 10: Final Message -->
+    <div class="slide">
+        <h2 class="section-header">الخلاصة</h2>
+        <div style="font-size: 30px; color: var(--secondary); margin-bottom: 20px;">ابدأ حيث أنت، واستخدم ما لديكِ.</div>
+        <p>كمطور، لديك ميزة لا يمتلكها غيرك: القدرة على بناء أدوات خاصة بك لتحليل البيانات.</p>
+        <p style="margin-top: 40px; font-family: 'Orbitron'; color: var(--primary); font-size: 28px; letter-spacing: 5px;">YOU GOT THIS!</p>
+    </div>
+
+    <!-- Navigation Arrows -->
+    <div class="nav-trigger next" onclick="nextSlide()"><i class="fa-solid fa-chevron-left"></i></div>
+    <div class="nav-trigger prev" onclick="prevSlide()"><i class="fa-solid fa-chevron-right"></i></div>
+</div>
+
+<script>
+let current = 0;
+const slides = document.querySelectorAll(".slide");
+const progress = document.getElementById("progress");
+const cursor = document.getElementById("custom-cursor");
+
+document.addEventListener("mousemove", (e) => {
+    cursor.style.left = e.clientX + "px";
+    cursor.style.top = e.clientY + "px";
+});
+
+function update() {
+    slides.forEach((s, i) => {
+        s.classList.toggle("active", i === current);
+    });
+    const percent = ((current + 1) / slides.length) * 100;
+    progress.style.width = percent + "%";
+}
+
+function nextSlide() { if (current < slides.length - 1) { current++; update(); } }
+function prevSlide() { if (current > 0) { current--; update(); } }
+
+document.addEventListener("keydown", (e) => {
+    if (e.key === "ArrowLeft" || e.key === "ArrowDown") nextSlide();
+    if (e.key === "ArrowRight" || e.key === "ArrowUp") prevSlide();
+});
+
+update();
+</script>
 
 </body>
 </html>
